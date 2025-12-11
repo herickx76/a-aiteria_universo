@@ -19,7 +19,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 80px; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 80px; overflow-x: hidden; }
         
         /* Header */
         header { background: var(--primary); color: var(--white); padding: 15px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -29,14 +29,41 @@
         #header-status { font-size: 0.8rem; opacity: 0.9; }
 
         /* Layout Slider (4 Telas) */
-        .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; padding-top: 20px; }
-        .slider-container { display: flex; width: 400%; transition: transform 0.4s ease; } 
-        .slide-page { width: 25%; padding: 15px; } 
+        .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; padding-top: 20px; min-height: 80vh; }
+        
+        /* O segredo para não ter branco infinito: align-items flex-start */
+        .slider-container { display: flex; width: 400%; transition: transform 0.4s ease; align-items: flex-start; } 
+        .slide-page { width: 25%; padding: 15px; transition: height 0.3s; } 
         
         .show-step-1 { transform: translateX(0%); }      /* Menu */
         .show-step-2 { transform: translateX(-25%); }    /* Montagem */
         .show-step-3 { transform: translateX(-50%); }    /* Checkout */
         .show-step-4 { transform: translateX(-75%); }    /* Sucesso */
+
+        /* --- CORREÇÃO DO BRANCO INFINITO --- */
+        /* Essas regras fazem as páginas inativas terem altura 0, 
+           assim o scroll do navegador obedece apenas a página ativa */
+        
+        /* Se estiver no passo 1, esconde altura dos outros */
+        .slider-container.show-step-1 #step-2-customization,
+        .slider-container.show-step-1 #step-3-checkout,
+        .slider-container.show-step-1 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+
+        /* Se estiver no passo 2 */
+        .slider-container.show-step-2 #step-1-selection,
+        .slider-container.show-step-2 #step-3-checkout,
+        .slider-container.show-step-2 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+
+        /* Se estiver no passo 3 */
+        .slider-container.show-step-3 #step-1-selection,
+        .slider-container.show-step-3 #step-2-customization,
+        .slider-container.show-step-3 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+
+        /* Se estiver no passo 4 */
+        .slider-container.show-step-4 #step-1-selection,
+        .slider-container.show-step-4 #step-2-customization,
+        .slider-container.show-step-4 #step-3-checkout { height: 0; overflow: hidden; padding: 0; }
+
 
         /* SEÇÕES E GRID DE PRODUTOS */
         .section-block { margin-bottom: 30px; }
@@ -548,7 +575,6 @@
                 this.carrinho.push(this.produtoAtual);
                 localStorage.setItem('meuCarrinhoAcai', JSON.stringify(this.carrinho));
 
-                // CHAMA A ANIMAÇÃO PROFISSIONAL AQUI
                 this.tocarAnimacaoAdicao();
             }
 
@@ -556,15 +582,12 @@
                 const overlay = document.getElementById('overlay-animacao');
                 const icone = document.getElementById('icone-animado');
 
-                // 1. Mostra o fundo borrado
                 overlay.classList.add('ativo');
 
-                // 2. Dispara a animação do ícone
-                icone.classList.remove('disparar-fly'); // Reseta
-                void icone.offsetWidth; // Força reflow (reiniciar animação)
+                icone.classList.remove('disparar-fly'); 
+                void icone.offsetWidth; 
                 icone.classList.add('disparar-fly');
 
-                // 3. Quando acabar a animação (1.5s), volta pro menu
                 setTimeout(() => {
                     overlay.classList.remove('ativo');
                     this.voltarMenu();
