@@ -395,7 +395,7 @@
                     this.dadosEmpresa = snapshot.val();
                     document.title = this.dadosEmpresa.nome_fantasia;
                     document.getElementById('nome-empresa').innerText = this.dadosEmpresa.nome_fantasia;
-                    if (this.dadosEmpresa.logo) document.getElementById('logo-empresa').src = `imagens/${this.dadosEmpresa.logo}`;
+                    if (this.dadosEmpresa.logo) document.getElementById('logo-empresa').src = this.dadosEmpresa.logo;
                     this.renderizarCardapioSegmentado(this.dadosEmpresa.cardapio || {});
                 } else {
                     alert("Loja não encontrada.");
