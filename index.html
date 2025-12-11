@@ -255,7 +255,7 @@ const firebaseConfig = {
                 }
             }
 
-            renderizarCardapioPrincipal(itens) {
+ renderizarCardapioPrincipal(itens) {
                 const container = document.getElementById('container-produtos');
                 let html = '<div class="category-block"><h3 class="cat-title">Destaques</h3><div class="size-grid">';
                 
@@ -264,9 +264,19 @@ const firebaseConfig = {
                 itens.forEach(item => {
                     const isConfiguravel = item.nome.toLowerCase().includes('açaí') || item.nome.toLowerCase().includes('ml');
                     
+                    // LÓGICA DA IMAGEM:
+                    // 1. Se tiver imagem no banco, usa a pasta 'imagens/' + nome do arquivo
+                    // 2. Se não tiver, usa uma imagem padrão da internet
+                    let imgPath = item.imagem ? `imagens/${item.imagem}` : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
+
                     html += `
                     <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
-                        <div class="card-img"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081967.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3081/3081967.png'"></div>
+                        <div class="card-img">
+                            <img src="${imgPath}" 
+                                 alt="${item.nome}" 
+                                 onerror="this.src='https://cdn-icons-png.flaticon.com/512/3081/3081967.png'"
+                                 style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px;">
+                        </div>
                         <div class="card-info">
                             <span class="label">${item.nome}</span>
                             <span class="price">R$ ${item.preco.toFixed(2).replace('.',',')}</span>
@@ -276,7 +286,6 @@ const firebaseConfig = {
                 html += '</div></div>';
                 container.innerHTML = html;
             }
-
             abrirMontagem(nome, precoBase, configuravel) {
                 this.produtoAtual = {
                     nome: nome, base: precoBase, configuravel: configuravel,
