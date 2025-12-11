@@ -46,7 +46,7 @@
         .show-step-3 { transform: translateX(-50%); }
         .show-step-4 { transform: translateX(-75%); }
 
-        /* Correção de Altura (Crucial para o scroll funcionar) */
+        /* Correção de Altura */
         .slider-container.show-step-1 #step-2-customization, .slider-container.show-step-1 #step-3-checkout, .slider-container.show-step-1 #step-4-success { height: 0; overflow: hidden; padding: 0; }
         .slider-container.show-step-2 #step-1-selection, .slider-container.show-step-2 #step-3-checkout, .slider-container.show-step-2 #step-4-success { height: 0; overflow: hidden; padding: 0; }
         .slider-container.show-step-3 #step-1-selection, .slider-container.show-step-3 #step-2-customization, .slider-container.show-step-3 #step-4-success { height: 0; overflow: hidden; padding: 0; }
@@ -57,15 +57,21 @@
         .section-title { color: var(--primary); font-size: 1.3rem; font-weight: 800; border-left: 5px solid var(--success); padding-left: 10px; margin-bottom: 15px; text-transform: uppercase; }
         .size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        /* CARD DO PRODUTO */
+        /* CARD DO PRODUTO (CORRIGIDO: SEM JS PARA APARECER) */
         .size-card { 
             background: var(--white); border-radius: 12px; padding: 10px; text-align: center; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; 
-            transition: transform 0.1s ease, opacity 0.6s ease, transform 0.6s ease;
-            opacity: 0; transform: translateY(30px); /* Inicial invisível */
+            /* Animação CSS Pura */
+            animation: fadeInCard 0.8s ease forwards;
+            opacity: 0; /* Começa invisível mas a animação resolve logo */
         }
-        .size-card.visible { opacity: 1; transform: translateY(0); } /* Visível */
-        .size-card:active { transform: scale(0.92) !important; transition: transform 0.1s; }
+        
+        @keyframes fadeInCard {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .size-card:active { transform: scale(0.92); transition: transform 0.1s; }
 
         .card-img img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
         .card-info .label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.95rem; }
@@ -140,8 +146,7 @@
                     <i class="fab fa-instagram"></i>
                     <span>@universodoacai</span>
                 </div>
-                <div id="header-status">
-                    </div>
+                <div id="header-status"></div>
             </div>
         </div>
     </header>
@@ -320,7 +325,6 @@
                 this.saboresDB = []; 
                 this.recheiosDB = [];
                 this.adicionaisDB = [];
-                this.observer = null; 
                 this.lojaAberta = false;
             }
 
@@ -333,7 +337,6 @@
                         this.carrinho = JSON.parse(salvo);
                         this.atualizarBarraFlutuante();
                     }
-                    this.iniciarObserver();
                 } catch (e) {
                     console.error("Erro:", e);
                 }
@@ -394,22 +397,14 @@
                 const dbRef = ref(db);
                 const fetchList = async (path) => {
                     const snap = await get(child(dbRef, path));
+                    // DEBUG: Verifique se está chegando dados
+                    if(!snap.exists()) console.warn(`Atenção: Caminho ${path} vazio no Firebase.`);
                     return snap.exists() ? Object.values(snap.val()) : [];
                 };
+                
                 this.saboresDB = await fetchList('sabores_acai');
                 this.recheiosDB = await fetchList('recheios_acai');
                 this.adicionaisDB = await fetchList('adds_acai');
-            }
-
-            iniciarObserver() {
-                this.observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                            this.observer.unobserve(entry.target); 
-                        }
-                    });
-                }, { threshold: 0.1 });
             }
 
             renderizarCardapioSegmentado(cardapioObj) {
@@ -445,9 +440,6 @@
                     htmlSecao += `</div></div>`;
                     container.innerHTML += htmlSecao;
                 });
-
-                const cards = document.querySelectorAll('.size-card');
-                cards.forEach(card => this.observer.observe(card));
             }
 
             voltarMenu() {
@@ -501,7 +493,7 @@
                 const container = document.getElementById(containerId);
                 container.innerHTML = "";
                 if(!dados || dados.length === 0) {
-                    container.innerHTML = "<small style='display:block; padding:10px; color:#999'>Sem opções.</small>";
+                    container.innerHTML = "<small style='display:block; padding:10px; color:#999'>Sem opções disponíveis.</small>";
                     return;
                 }
                 const imgPlaceholder = 'https://cdn-icons-png.flaticon.com/512/1375/1375106.png';
@@ -571,7 +563,6 @@
             }
 
             adicionarAoCarrinho() {
-                // TRAVA DE LOJA FECHADA
                 if (!this.lojaAberta) {
                     return alert("🚫 Estamos fechados no momento! Confira nosso horário de atendimento.");
                 }
