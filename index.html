@@ -239,7 +239,7 @@ class AppController {
                 this.adicionaisDB = await fetchList('adds_acai');
             }
 
-            // --- RENDERIZA O CARDÁPIO DIVIDIDO EM SEÇÕES ---
+// --- RENDERIZA O CARDÁPIO DIVIDIDO EM SEÇÕES ---
             renderizarCardapioSegmentado(cardapioObj) {
                 const container = document.getElementById('container-produtos');
                 container.innerHTML = "";
@@ -249,25 +249,31 @@ class AppController {
                     return;
                 }
 
-                // Loop para cada SEÇÃO (Ex: secao_isopor, secao_copo)
+                // Loop para cada SEÇÃO
                 Object.entries(cardapioObj).forEach(([chaveSecao, dadosSecao]) => {
                     
-                    // 1. Cria o Título da Seção
                     let htmlSecao = `
                     <div class="section-block">
                         <h3 class="section-title">${dadosSecao.titulo}</h3>
                         <div class="size-grid">`;
 
-                    // 2. Cria os Itens dentro dessa Seção
                     if(dadosSecao.itens) {
                         Object.entries(dadosSecao.itens).forEach(([chaveItem, item]) => {
                             
-                            // Verifica se é açaí para ativar montagem
-                            const isConfiguravel = item.nome.toLowerCase().includes('isopor') || 
-                                                   item.nome.toLowerCase().includes('copo') || 
-                                                   item.nome.toLowerCase().includes('açaí');
+                            // ==================================================
+                            // 🔍 O SEGREDO ESTÁ AQUI EMBAIXO:
+                            // ==================================================
+                            const nome = item.nome.toLowerCase();
                             
-                            // Imagem (Lê o caminho do banco ou usa padrão)
+                            // Verifica se o nome contém QUALQUER uma dessas palavras
+                            const isConfiguravel = nome.includes('isopor') || 
+                                                   nome.includes('copo') || 
+                                                   nome.includes('açaí') ||
+                                                   nome.includes('tigela') ||
+                                                   nome.includes('barca') ||
+                                                   nome.includes('ml') ||    // Pega "300ml", "500ml"
+                                                   nome.includes('litro');   // Pega "1 Litro"
+                            
                             let imgPath = item.imagem ? item.imagem : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
 
                             htmlSecao += `
@@ -283,11 +289,11 @@ class AppController {
                         });
                     }
 
-                    htmlSecao += `</div></div>`; // Fecha grid e section-block
+                    htmlSecao += `</div></div>`;
                     container.innerHTML += htmlSecao;
                 });
             }
-
+            
             // --- ABRE A TELA DE MONTAGEM ---
             abrirMontagem(nome, precoBase, configuravel) {
                 this.produtoAtual = {
