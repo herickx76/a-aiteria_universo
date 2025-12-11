@@ -202,19 +202,29 @@ const firebaseConfig = {
                 document.getElementById('loading-screen').style.display = 'none';
             }
 
-            async carregarDadosEmpresa() {
+async carregarDadosEmpresa() {
                 try {
                     const dbRef = ref(db);
-                    // Busca em: empresas/joao_burguer
                     const snapshot = await get(child(dbRef, `empresas/${this.empresaId}`));
 
                     if (snapshot.exists()) {
-                        this.dadosEmpresa = snapshot.val(); // No Realtime usa .val()
+                        this.dadosEmpresa = snapshot.val();
                         
+                        // 1. Atualiza Título e Nome
                         document.title = this.dadosEmpresa.nome_fantasia;
                         document.getElementById('nome-empresa').innerText = this.dadosEmpresa.nome_fantasia;
                         
-                        // Converte objeto JSON para Array para poder fazer loop
+                        // 2. ATUALIZA A LOGO (NOVA LÓGICA)
+                        const imgLogo = document.getElementById('logo-empresa');
+                        if (this.dadosEmpresa.logo) {
+                            // Se tiver logo no banco, puxa da pasta imagens
+                            imgLogo.src = `imagens/${this.dadosEmpresa.logo}`;
+                        } else {
+                            // Se não tiver, usa uma imagem genérica
+                            imgLogo.src = "https://cdn-icons-png.flaticon.com/512/185/185983.png";
+                        }
+
+                        // 3. Carrega o cardápio
                         const cardapioObj = this.dadosEmpresa.cardapio || {};
                         const cardapioArray = Object.entries(cardapioObj).map(([key, val]) => ({
                             id: key, ...val
@@ -228,8 +238,7 @@ const firebaseConfig = {
                     console.error(error);
                     alert("Erro ao conectar no banco.");
                 }
-            }
-
+            }1
             async carregarOpcoesGlobais() {
                 // Simula busca de sabores/recheios (se tiver no banco, busca, se não usa padrão)
                 const dbRef = ref(db);
@@ -255,7 +264,7 @@ const firebaseConfig = {
                 }
             }
 
- renderizarCardapioPrincipal(itens) {
+renderizarCardapioPrincipal(itens) {
                 const container = document.getElementById('container-produtos');
                 let html = '<div class="category-block"><h3 class="cat-title">Destaques</h3><div class="size-grid">';
                 
@@ -264,10 +273,10 @@ const firebaseConfig = {
                 itens.forEach(item => {
                     const isConfiguravel = item.nome.toLowerCase().includes('açaí') || item.nome.toLowerCase().includes('ml');
                     
-                    // LÓGICA DA IMAGEM:
-                    // 1. Se tiver imagem no banco, usa a pasta 'imagens/' + nome do arquivo
-                    // 2. Se não tiver, usa uma imagem padrão da internet
-                    let imgPath = item.imagem ? `imagens/${item.imagem}` : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
+                    // --- MUDANÇA AQUI ---
+                    // Agora o código aceita QUALQUER caminho que você colocar no banco
+                    // Se não tiver imagem, usa a genérica
+                    let imgPath = item.imagem ? item.imagem : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
 
                     html += `
                     <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
@@ -286,6 +295,7 @@ const firebaseConfig = {
                 html += '</div></div>';
                 container.innerHTML = html;
             }
+            
             abrirMontagem(nome, precoBase, configuravel) {
                 this.produtoAtual = {
                     nome: nome, base: precoBase, configuravel: configuravel,
