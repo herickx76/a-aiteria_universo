@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Carregando Loja...</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ================= ESTILOS (Design) ================= */
@@ -21,77 +21,61 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: var(--bg); color: var(--text); padding-bottom: 80px; overflow-x: hidden; }
         
-        /* Header */
-        header { background: var(--primary); color: var(--white); padding: 15px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header-content { display: flex; align-items: center; justify-content: center; gap: 15px; text-align: left; }
-        .profile-pic img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
-        .contact-info h3 { font-size: 1.2rem; margin-bottom: 2px; }
-        #header-status { font-size: 0.8rem; opacity: 0.9; }
-
-        /* Layout Slider (4 Telas) */
-        .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; padding-top: 20px; min-height: 80vh; }
+        /* HEADER */
+        header { background: var(--primary); color: var(--white); padding: 15px 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { display: flex; align-items: center; justify-content: flex-start; gap: 15px; text-align: left; }
+        .profile-pic img { width: 55px; height: 55px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
         
-        /* O segredo para não ter branco infinito: align-items flex-start */
+        .contact-info { display: flex; flex-direction: column; justify-content: center; }
+        .insta-info { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+        .insta-info i { font-size: 1.1rem; } 
+        .insta-info span { font-weight: 600; font-size: 1.05rem; }
+        
+        #header-status { font-size: 0.85rem; opacity: 0.9; display: flex; align-items: center; gap: 6px; font-weight: 500; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .status-open { background-color: #00ff00; box-shadow: 0 0 6px #00ff00; }
+        .status-closed { background-color: #ff4444; }
+
+        /* Layout Slider */
+        .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; padding-top: 20px; min-height: 80vh; }
         .slider-container { display: flex; width: 400%; transition: transform 0.4s ease; align-items: flex-start; } 
         .slide-page { width: 25%; padding: 15px; transition: height 0.3s; } 
         
-        .show-step-1 { transform: translateX(0%); }      /* Menu */
-        .show-step-2 { transform: translateX(-25%); }    /* Montagem */
-        .show-step-3 { transform: translateX(-50%); }    /* Checkout */
-        .show-step-4 { transform: translateX(-75%); }    /* Sucesso */
+        .show-step-1 { transform: translateX(0%); }
+        .show-step-2 { transform: translateX(-25%); }
+        .show-step-3 { transform: translateX(-50%); }
+        .show-step-4 { transform: translateX(-75%); }
 
-        /* --- CORREÇÃO DO BRANCO INFINITO --- */
-        /* Essas regras fazem as páginas inativas terem altura 0, 
-           assim o scroll do navegador obedece apenas a página ativa */
-        
-        /* Se estiver no passo 1, esconde altura dos outros */
-        .slider-container.show-step-1 #step-2-customization,
-        .slider-container.show-step-1 #step-3-checkout,
-        .slider-container.show-step-1 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+        /* Correção de Altura */
+        .slider-container.show-step-1 #step-2-customization, .slider-container.show-step-1 #step-3-checkout, .slider-container.show-step-1 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+        .slider-container.show-step-2 #step-1-selection, .slider-container.show-step-2 #step-3-checkout, .slider-container.show-step-2 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+        .slider-container.show-step-3 #step-1-selection, .slider-container.show-step-3 #step-2-customization, .slider-container.show-step-3 #step-4-success { height: 0; overflow: hidden; padding: 0; }
+        .slider-container.show-step-4 #step-1-selection, .slider-container.show-step-4 #step-2-customization, .slider-container.show-step-4 #step-3-checkout { height: 0; overflow: hidden; padding: 0; }
 
-        /* Se estiver no passo 2 */
-        .slider-container.show-step-2 #step-1-selection,
-        .slider-container.show-step-2 #step-3-checkout,
-        .slider-container.show-step-2 #step-4-success { height: 0; overflow: hidden; padding: 0; }
-
-        /* Se estiver no passo 3 */
-        .slider-container.show-step-3 #step-1-selection,
-        .slider-container.show-step-3 #step-2-customization,
-        .slider-container.show-step-3 #step-4-success { height: 0; overflow: hidden; padding: 0; }
-
-        /* Se estiver no passo 4 */
-        .slider-container.show-step-4 #step-1-selection,
-        .slider-container.show-step-4 #step-2-customization,
-        .slider-container.show-step-4 #step-3-checkout { height: 0; overflow: hidden; padding: 0; }
-
-
-        /* SEÇÕES E GRID DE PRODUTOS */
+        /* SEÇÕES E GRID */
         .section-block { margin-bottom: 30px; }
-        .section-title { 
-            color: var(--primary); 
-            font-size: 1.3rem; 
-            font-weight: 800;
-            border-left: 5px solid var(--success);
-            padding-left: 10px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-        
+        .section-title { color: var(--primary); font-size: 1.3rem; font-weight: 800; border-left: 5px solid var(--success); padding-left: 10px; margin-bottom: 15px; text-transform: uppercase; }
         .size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .size-card { background: var(--white); border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
-        .size-card:active { transform: scale(0.98); }
+
+        /* CARD DO PRODUTO */
+        .size-card { 
+            background: var(--white); border-radius: 12px; padding: 10px; text-align: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; 
+            transition: transform 0.1s ease, opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0; transform: translateY(30px);
+        }
+        .size-card.visible { opacity: 1; transform: translateY(0); }
+        .size-card:active { transform: scale(0.92) !important; transition: transform 0.1s; }
+
         .card-img img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
         .card-info .label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.95rem; }
         .card-info .price { color: var(--success); font-weight: bold; }
 
-        /* Tela de Montagem */
+        /* Outros estilos */
         .back-header { cursor: pointer; color: var(--primary); font-weight: bold; margin-bottom: 15px; display: inline-block; padding: 5px 10px; background: rgba(0,0,0,0.05); border-radius: 20px; }
         .product-header { background: var(--primary-light); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        
         .menu-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .card-header { font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        
-        /* Opções (Sabores/Recheios) */
         .option-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
         .option-info { display: flex; align-items: center; gap: 12px; }
         .option-thumb { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; background-color: #f9f9f9; }
@@ -99,76 +83,40 @@
         .stepper { display: flex; align-items: center; gap: 10px; }
         .step-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--primary); background: white; color: var(--primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .selected-item { background-color: #fcfaff; }
-        
         .hidden { display: none !important; }
         .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 1rem; }
         .input-label { font-size: 0.9rem; font-weight: bold; color: #555; margin-bottom: 5px; display: block; }
-
-        /* Barra Inferior */
         .menu-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 999; }
         .btn-action { background: var(--success); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .btn-cart-view { background: var(--primary); width: 100%; justify-content: space-between; }
         .total-info { display: flex; flex-direction: column; }
         .total-info small { color: #666; font-size: 0.8rem; }
         .total-info span { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
-
-        /* Carrinho */
         .cart-item { border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 10px; background: #fff; position: relative; }
         .cart-item-title { font-weight: bold; color: var(--primary); }
         .cart-item-desc { font-size: 0.85rem; color: #666; margin: 5px 0; }
         .cart-item-price { font-weight: bold; color: var(--success); }
         .btn-remove { position: absolute; top: 10px; right: 10px; color: var(--danger); cursor: pointer; background: none; border: none; font-size: 1.1rem; }
         select.input-field { background: white; }
-
-        /* Tela Sucesso */
         .success-box { text-align: center; margin-top: 50px; }
         .success-icon { color: var(--success); font-size: 5rem; margin-bottom: 20px; }
 
-        /* ======================================================== */
-        /* ANIMAÇÃO DE ADICIONAR AO CARRINHO (PROFISSIONAL) */
-        /* ======================================================== */
-        #overlay-animacao {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px); /* Efeito Blur */
-            z-index: 5000;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        /* LOADING ANIMADO */
+        #loading-screen { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--primary); 
+            display: flex; justify-content: center; align-items: center; 
+            color: white; flex-direction: column; z-index: 2000;
+            transition: opacity 1s ease, visibility 1s;
         }
+        #loading-screen.loading-finish { opacity: 0; visibility: hidden; }
+
+        /* ANIMAÇÃO CART */
+        #overlay-animacao { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(8px); z-index: 5000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         #overlay-animacao.ativo { opacity: 1; pointer-events: all; }
-
-        .animacao-icone {
-            font-size: 6rem;
-            color: var(--primary);
-            opacity: 0;
-            transform: translateX(-150px) scale(0.5); /* Começa na esquerda pequeno */
-        }
-
-        /* Classe que dispara o movimento */
-        .disparar-fly {
-            animation: fly-into-cart 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-
-        @keyframes fly-into-cart {
-            0% {
-                opacity: 0;
-                transform: translateX(-100vw) scale(0.5); /* Fora da tela esquerda */
-            }
-            40% {
-                opacity: 1;
-                transform: translateX(0) scale(1.3); /* Meio da tela GRANDE */
-            }
-            60% {
-                opacity: 1;
-                transform: translateX(0) scale(1.0); /* Meio da tela Normal */
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(100vw) scale(0.5); /* Sai pela direita */
-            }
-        }
-
-        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); display: flex; justify-content: center; align-items: center; color: white; flex-direction: column; z-index: 2000; }
+        .animacao-icone { font-size: 6rem; color: var(--primary); opacity: 0; transform: translateX(-150px) scale(0.5); }
+        .disparar-fly { animation: fly-into-cart 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        @keyframes fly-into-cart { 0% { opacity: 0; transform: translateX(-100vw) scale(0.5); } 40% { opacity: 1; transform: translateX(0) scale(1.3); } 60% { opacity: 1; transform: translateX(0) scale(1.0); } 100% { opacity: 0; transform: translateX(100vw) scale(0.5); } }
     </style>
 </head>
 <body>
@@ -188,8 +136,12 @@
                 <img id="logo-empresa" src="" onerror="this.src='https://cdn-icons-png.flaticon.com/512/185/185983.png'">
             </div>
             <div class="contact-info">
-                <h3 id="nome-empresa">...</h3>
-                <p id="header-status"><i class="fas fa-circle" style="color: #00ff00; font-size: 8px;"></i> Aberto</p>
+                <div class="insta-info">
+                    <i class="fab fa-instagram"></i>
+                    <span>@universodoacai</span>
+                </div>
+                <div id="header-status">
+                    </div>
             </div>
         </div>
     </header>
@@ -198,8 +150,8 @@
         <div class="slider-container show-step-1">
             
             <div class="slide-page" id="step-1-selection">
-                <div class="brand-banner" style="text-align: center; margin-bottom: 25px;">
-                    <h2 style="color: var(--primary);">Cardápio Digital 💜</h2>
+                <div class="brand-banner" style="text-align: center; margin-bottom: 45px;">
+                    <h2 style="color: var(--primary); font-size: 1.8rem;">Cardápio Digital</h2>
                 </div>
                 <div id="container-produtos"></div>
                 <div style="height: 60px;"></div>
@@ -275,7 +227,7 @@
                     <input type="text" id="clienteNome" placeholder="João Silva" class="input-field">
                     
                     <label class="input-label">Seu WhatsApp</label>
-                    <input type="tel" id="clienteZap" placeholder="(11) 99999-9999" class="input-field">
+                    <input type="tel" id="clienteZap" placeholder="11999999999 (Apenas Números)" class="input-field" maxlength="11" oninput="app.forcarNumeros(this)">
                 </div>
 
                 <h2 class="section-title"><i class="fas fa-wallet"></i> Pagamento</h2>
@@ -297,7 +249,7 @@
                 <div style="height: 100px;"></div>
             </div>
 
-            <div class="slide-page" id="step-4-success">
+             <div class="slide-page" id="step-4-success">
                 <div class="success-box">
                     <i class="fas fa-check-circle success-icon"></i>
                     <h2 style="color: var(--primary); margin-bottom: 10px;">Pedido Recebido!</h2>
@@ -371,6 +323,8 @@
                 this.saboresDB = []; 
                 this.recheiosDB = [];
                 this.adicionaisDB = [];
+                this.observer = null; 
+                this.lojaAberta = false; // Estado inicial da loja
             }
 
             async init() {
@@ -382,10 +336,13 @@
                         this.carrinho = JSON.parse(salvo);
                         this.atualizarBarraFlutuante();
                     }
+                    this.iniciarObserver();
                 } catch (e) {
                     console.error("Erro:", e);
                 }
-                document.getElementById('loading-screen').style.display = 'none';
+                const loading = document.getElementById('loading-screen');
+                loading.classList.add('loading-finish'); 
+                setTimeout(() => { loading.style.display = 'none'; }, 1000);
             }
 
             async carregarDadosEmpresa() {
@@ -394,11 +351,46 @@
                 if (snapshot.exists()) {
                     this.dadosEmpresa = snapshot.val();
                     document.title = this.dadosEmpresa.nome_fantasia;
-                    document.getElementById('nome-empresa').innerText = this.dadosEmpresa.nome_fantasia;
+                    
                     if (this.dadosEmpresa.logo) document.getElementById('logo-empresa').src = this.dadosEmpresa.logo;
+                    
+                    this.verificarStatusLoja();
                     this.renderizarCardapioSegmentado(this.dadosEmpresa.cardapio || {});
                 } else {
                     alert("Loja não encontrada.");
+                }
+            }
+            
+            verificarStatusLoja() {
+                const statusDiv = document.getElementById('header-status');
+                const hAbre = this.dadosEmpresa.horario_abertura;
+                const hFecha = this.dadosEmpresa.horario_fechamento;
+
+                // Se não tem horário, assume aberto
+                if(!hAbre || !hFecha) {
+                    this.lojaAberta = true;
+                    statusDiv.innerHTML = `<span class="status-dot status-open"></span> Aberto`;
+                    return;
+                }
+
+                const agora = new Date();
+                const minutosAgora = agora.getHours() * 60 + agora.getMinutes();
+                
+                const [hA, mA] = hAbre.split(':').map(Number);
+                const [hF, mF] = hFecha.split(':').map(Number);
+                const minutosAbre = hA * 60 + mA;
+                const minutosFecha = hF * 60 + mF;
+
+                this.lojaAberta = false;
+                if(minutosAgora >= minutosAbre && minutosAgora < minutosFecha) {
+                    this.lojaAberta = true;
+                }
+
+                if(this.lojaAberta) {
+                    statusDiv.innerHTML = `<span class="status-dot status-open"></span> Aberto`;
+                } else {
+                    statusDiv.innerHTML = `<span class="status-dot status-closed"></span> Fechado`;
+                    statusDiv.style.color = "#ff4444";
                 }
             }
 
@@ -411,6 +403,17 @@
                 this.saboresDB = await fetchList('sabores_acai');
                 this.recheiosDB = await fetchList('recheios_acai');
                 this.adicionaisDB = await fetchList('adds_acai');
+            }
+
+            iniciarObserver() {
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            this.observer.unobserve(entry.target); 
+                        }
+                    });
+                }, { threshold: 0.1 });
             }
 
             renderizarCardapioSegmentado(cardapioObj) {
@@ -430,6 +433,7 @@
                             const nome = item.nome.toLowerCase();
                             const isConfiguravel = nome.includes('isopor') || nome.includes('copo') || nome.includes('açaí') || nome.includes('tigela') || nome.includes('barca') || nome.includes('ml') || nome.includes('litro');
                             let imgPath = item.imagem ? item.imagem : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
+                            
                             htmlSecao += `
                             <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
                                 <div class="card-img">
@@ -445,6 +449,9 @@
                     htmlSecao += `</div></div>`;
                     container.innerHTML += htmlSecao;
                 });
+
+                const cards = document.querySelectorAll('.size-card');
+                cards.forEach(card => this.observer.observe(card));
             }
 
             voltarMenu() {
@@ -537,7 +544,7 @@
                 }
                 if (delta > 0 && tipo === 'recheio') {
                     const total = Object.values(this.produtoAtual.selecoes.recheio).reduce((a,b)=>a+b,0);
-                    if (total >= 5) return alert("Limite de recheios atingido.");
+                    if (total >= 7) return alert("Limite de recheios atingido.");
                 }
 
                 if (newQtd === 0) delete this.produtoAtual.selecoes[tipo][item.nome];
@@ -568,6 +575,11 @@
             }
 
             adicionarAoCarrinho() {
+                // TRAVA DE LOJA FECHADA
+                if (!this.lojaAberta) {
+                    return alert("🚫 Estamos fechados no momento! Confira nosso horário de atendimento.");
+                }
+
                 if (this.produtoAtual.configuravel && Object.keys(this.produtoAtual.selecoes.sabor).length === 0) {
                     return alert("Escolha ao menos 1 Sabor!");
                 }
@@ -645,7 +657,16 @@
                 else div.classList.add('hidden');
             }
 
+            forcarNumeros(input) {
+                input.value = input.value.replace(/\D/g, ''); 
+            }
+
             async finalizarPedidoNoBanco() {
+                // TRAVA DE LOJA FECHADA
+                if (!this.lojaAberta) {
+                    return alert("🚫 Estamos fechados no momento! Não é possível finalizar o pedido.");
+                }
+
                 const rua = document.getElementById('end-rua').value.trim();
                 const bairro = document.getElementById('end-bairro').value.trim();
                 const num = document.getElementById('end-num').value.trim();
@@ -655,7 +676,8 @@
                 const pag = document.getElementById('forma-pagamento').value;
                 const troco = document.getElementById('valor-troco').value.trim();
 
-                if(!rua || !bairro || !num || !nome || zap.length < 8) return alert("Preencha o Endereço completo, Nome e WhatsApp.");
+                if(!rua || !bairro || !num || !nome) return alert("Preencha o Endereço completo e seu Nome.");
+                if(!zap || zap.length < 10) return alert("WhatsApp inválido. Digite o DDD + Número (apenas números).");
                 if(pag === 'Dinheiro' && !troco) return alert("Informe o valor para troco.");
 
                 let totalGeral = this.carrinho.reduce((acc, item) => acc + item.totalCalculado, 0);
@@ -680,6 +702,7 @@
 
                 document.getElementById('loading-text').innerText = "Enviando Pedido...";
                 document.getElementById('loading-screen').style.display = 'flex';
+                document.getElementById('loading-screen').classList.remove('loading-finish');
 
                 try {
                     const path = `empresas/${this.empresaId}/pedidos`;
