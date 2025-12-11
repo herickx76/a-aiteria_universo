@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* ================= ESTILOS GERAIS ================= */
+        /* ================= ESTILOS (Design) ================= */
         :root {
             --primary: #4b0082;
             --primary-light: #6a0dad;
@@ -20,7 +20,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: var(--bg); color: var(--text); padding-bottom: 80px; }
         
-        /* Header Simplificado */
+        /* Header */
         header { background: var(--primary); color: var(--white); padding: 15px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .header-content { display: flex; align-items: center; justify-content: center; gap: 15px; text-align: left; }
         .profile-pic img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
@@ -29,16 +29,23 @@
 
         /* Layout */
         .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; padding-top: 20px; }
-        
-        /* Slider Step Logic */
         .slider-container { display: flex; width: 200%; transition: transform 0.4s ease; }
         .slide-page { width: 50%; padding: 15px; }
         .show-step-1 { transform: translateX(0%); }
         .show-step-2 { transform: translateX(-50%); }
 
-        /* Grid de Produtos */
-        .category-block { margin-bottom: 25px; }
-        .cat-title { color: var(--primary); border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-bottom: 15px; }
+        /* SEÇÕES E GRID DE PRODUTOS */
+        .section-block { margin-bottom: 30px; }
+        .section-title { 
+            color: var(--primary); 
+            font-size: 1.3rem; 
+            font-weight: 800;
+            border-left: 5px solid var(--success);
+            padding-left: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
         .size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .size-card { background: var(--white); border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
         .size-card:active { transform: scale(0.98); }
@@ -57,20 +64,18 @@
         .option-name { font-weight: 500; }
         .stepper { display: flex; align-items: center; gap: 10px; }
         .step-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--primary); background: white; color: var(--primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .step-btn:active { background: var(--primary); color: white; }
         .selected-item { background-color: #fcfaff; }
         
         .hidden { display: none !important; }
-        .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; font-size: 1rem; outline-color: var(--primary); }
+        .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; font-size: 1rem; }
 
         /* Barra Inferior */
         .menu-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 999; }
-        .btn-finish { background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3); }
+        .btn-finish { background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .total-info { display: flex; flex-direction: column; }
         .total-info small { color: #666; font-size: 0.8rem; }
         .total-info span { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
 
-        /* Loading Overlay */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); display: flex; justify-content: center; align-items: center; color: white; flex-direction: column; z-index: 2000; }
     </style>
 </head>
@@ -78,7 +83,7 @@
 
     <div id="loading-screen">
         <i class="fas fa-circle-notch fa-spin fa-3x"></i>
-        <p style="margin-top: 15px; font-weight: bold;">Abrindo Cardápio...</p>
+        <p style="margin-top: 15px; font-weight: bold;">Carregando Loja...</p>
     </div>
 
     <header id="main-header">
@@ -87,8 +92,8 @@
                 <img id="logo-empresa" src="" onerror="this.src='https://cdn-icons-png.flaticon.com/512/185/185983.png'">
             </div>
             <div class="contact-info">
-                <h3 id="nome-empresa">Carregando...</h3>
-                <p id="header-status"><i class="fas fa-circle" style="color: #00ff00; font-size: 8px;"></i> Aberto para pedidos</p>
+                <h3 id="nome-empresa">...</h3>
+                <p id="header-status"><i class="fas fa-circle" style="color: #00ff00; font-size: 8px;"></i> Aberto</p>
             </div>
         </div>
     </header>
@@ -98,7 +103,7 @@
             
             <div class="slide-page" id="step-1-selection">
                 <div class="brand-banner" style="text-align: center; margin-bottom: 25px;">
-                    <h2 style="color: var(--primary);">O que vamos pedir hoje? 😋</h2>
+                    <h2 style="color: var(--primary);">Cardápio Digital 💜</h2>
                 </div>
 
                 <div id="container-produtos"></div>
@@ -106,7 +111,7 @@
 
             <div class="slide-page" id="step-2-customization">
                 <div class="back-header" onclick="app.voltarMenu()">
-                    <i class="fas fa-chevron-left"></i> Voltar ao Cardápio
+                    <i class="fas fa-chevron-left"></i> Voltar
                 </div>
 
                 <div class="product-header">
@@ -116,44 +121,41 @@
                 
                 <form id="formPedido">
                     <div class="menu-card" id="card-sabores">
-                        <div class="card-header">1. Escolha os Sabores <small>(Até 2)</small></div>
+                        <div class="card-header">1. Sabores <small>(Até 2)</small></div>
                         <div class="options-list" id="lista-sabores"></div>
                     </div>
 
                     <div class="menu-card" id="card-recheios">
-                        <div class="card-header">2. Escolha os Recheios <small>(Grátis)</small></div>
+                        <div class="card-header">2. Recheios <small>(Grátis)</small></div>
                         <div class="options-list" id="lista-recheios"></div>
                     </div>
 
                     <div class="menu-card" id="card-adicionais">
-                        <div class="card-header">3. Turbinar seu pedido?</div>
+                        <div class="card-header">3. Adicionais Pagos</div>
                         <div class="options-list" id="lista-adicionais"></div>
                     </div>
 
                     <div class="menu-card">
                         <div class="card-header">📝 Finalizar</div>
                         <input type="text" id="clienteNome" placeholder="Seu Nome" class="input-field">
-                        <input type="tel" id="clienteZap" placeholder="Seu WhatsApp (DDD + Número)" class="input-field">
-                        <textarea id="observacao" placeholder="Alguma observação? (Ex: Sem caldas)" class="input-field" rows="2"></textarea>
+                        <input type="tel" id="clienteZap" placeholder="Seu WhatsApp" class="input-field">
+                        <textarea id="observacao" placeholder="Observações..." class="input-field" rows="2"></textarea>
                     </div>
-
                     <div style="height: 100px;"></div>
                 </form>
             </div>
-
         </div>
         
         <div class="menu-footer hidden" id="barra-pedido">
             <div class="total-info">
-                <small>Total a pagar:</small>
+                <small>Total:</small>
                 <span id="valorTotal">R$ 0,00</span>
             </div>
             <button class="btn-finish" onclick="app.enviarPedido()">
-                Enviar Pedido <i class="fab fa-whatsapp"></i>
+                Concluir <i class="fab fa-whatsapp"></i>
             </button>
         </div>
     </main>
-
 
     <script type="module">
         // =========================================================
@@ -186,7 +188,6 @@ class AppController {
                 this.empresaId = ID_DA_LOJA;
                 this.dadosEmpresa = {};
                 this.produtoAtual = null;
-                // Arrays para cache
                 this.saboresDB = []; 
                 this.recheiosDB = [];
                 this.adicionaisDB = [];
@@ -195,15 +196,13 @@ class AppController {
             async init() {
                 try {
                     await this.carregarDadosEmpresa();
-                    await this.carregarOpcoesGlobais();
+                    await this.carregarOpcoesGlobais(); // Busca sabores_acai, etc.
                 } catch (e) {
-                    console.error("Erro fatal:", e);
-                    alert("Erro ao carregar sistema. Verifique a conexão.");
+                    console.error("Erro:", e);
                 }
                 document.getElementById('loading-screen').style.display = 'none';
             }
 
-            // 1. Carrega Configurações da Empresa (Nome, Logo, Cardápio)
             async carregarDadosEmpresa() {
                 const dbRef = ref(db);
                 const snapshot = await get(child(dbRef, `empresas/${this.empresaId}`));
@@ -211,29 +210,22 @@ class AppController {
                 if (snapshot.exists()) {
                     this.dadosEmpresa = snapshot.val();
                     
-                    // UI: Título e Nome
                     document.title = this.dadosEmpresa.nome_fantasia;
                     document.getElementById('nome-empresa').innerText = this.dadosEmpresa.nome_fantasia;
                     
-                    // UI: Logo (Lê da pasta "imagens" se existir no banco)
-                    const imgLogo = document.getElementById('logo-empresa');
                     if (this.dadosEmpresa.logo) {
-                        imgLogo.src = `imagens/${this.dadosEmpresa.logo}`;
+                        document.getElementById('logo-empresa').src = `imagens/${this.dadosEmpresa.logo}`;
                     }
 
-                    // Prepara Cardápio
-                    const cardapioObj = this.dadosEmpresa.cardapio || {};
-                    const cardapioArray = Object.entries(cardapioObj).map(([key, val]) => ({
-                        id: key, ...val
-                    }));
-                    
-                    this.renderizarCardapioPrincipal(cardapioArray);
+                    // Renderiza o cardápio segmentado
+                    this.renderizarCardapioSegmentado(this.dadosEmpresa.cardapio || {});
+
                 } else {
-                    document.body.innerHTML = "<h2 style='padding:20px; text-align:center'>Loja não encontrada. Verifique o ID.</h2>";
+                    alert("Loja não encontrada.");
                 }
             }
 
-            // 2. Carrega Listas de Opções (Sabores, Recheios...)
+            // --- CARREGA OS DADOS NOVOS (sabores_acai, etc) ---
             async carregarOpcoesGlobais() {
                 const dbRef = ref(db);
                 const fetchList = async (path) => {
@@ -241,47 +233,62 @@ class AppController {
                     return snap.exists() ? Object.values(snap.val()) : [];
                 };
 
-                this.saboresDB = await fetchList('sabores');
-                this.recheiosDB = await fetchList('recheios');
-                this.adicionaisDB = await fetchList('adicionais');
-
-                // Fallback se banco estiver vazio (Para não quebrar a tela)
-                if(this.saboresDB.length === 0) {
-                    this.saboresDB = [{nome: "Tradicional"}, {nome: "Morango"}, {nome: "Ninho"}];
-                    this.recheiosDB = [{nome: "Leite em pó"}, {nome: "Granola"}, {nome: "Paçoca"}];
-                    this.adicionaisDB = [{nome: "Nutella", preco: 5.0}];
-                }
+                // Agora busca os nomes corretos que você pediu
+                this.saboresDB = await fetchList('sabores_acai');
+                this.recheiosDB = await fetchList('recheios_acai');
+                this.adicionaisDB = await fetchList('adds_acai');
             }
 
-            // 3. Renderiza a Vitrine (Passo 1)
-            renderizarCardapioPrincipal(itens) {
+            // --- RENDERIZA O CARDÁPIO DIVIDIDO EM SEÇÕES ---
+            renderizarCardapioSegmentado(cardapioObj) {
                 const container = document.getElementById('container-produtos');
-                let html = '<div class="category-block"><h3 class="cat-title">Destaques</h3><div class="size-grid">';
-                
-                if(itens.length === 0) html += '<p>O cardápio está sendo atualizado...</p>';
+                container.innerHTML = "";
 
-                itens.forEach(item => {
-                    const isConfiguravel = item.nome.toLowerCase().includes('açaí') || item.nome.toLowerCase().includes('ml') || item.nome.toLowerCase().includes('sorvete');
+                if (Object.keys(cardapioObj).length === 0) {
+                    container.innerHTML = "<p>Cardápio vazio.</p>";
+                    return;
+                }
+
+                // Loop para cada SEÇÃO (Ex: secao_isopor, secao_copo)
+                Object.entries(cardapioObj).forEach(([chaveSecao, dadosSecao]) => {
                     
-                    // Imagem: Usa exatamente o caminho do banco OU genérica
-                    let imgPath = item.imagem ? item.imagem : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
+                    // 1. Cria o Título da Seção
+                    let htmlSecao = `
+                    <div class="section-block">
+                        <h3 class="section-title">${dadosSecao.titulo}</h3>
+                        <div class="size-grid">`;
 
-                    html += `
-                    <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
-                        <div class="card-img">
-                            <img src="${imgPath}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3081/3081967.png'">
-                        </div>
-                        <div class="card-info">
-                            <span class="label">${item.nome}</span>
-                            <span class="price">R$ ${item.preco.toFixed(2).replace('.',',')}</span>
-                        </div>
-                    </div>`;
+                    // 2. Cria os Itens dentro dessa Seção
+                    if(dadosSecao.itens) {
+                        Object.entries(dadosSecao.itens).forEach(([chaveItem, item]) => {
+                            
+                            // Verifica se é açaí para ativar montagem
+                            const isConfiguravel = item.nome.toLowerCase().includes('isopor') || 
+                                                   item.nome.toLowerCase().includes('copo') || 
+                                                   item.nome.toLowerCase().includes('açaí');
+                            
+                            // Imagem (Lê o caminho do banco ou usa padrão)
+                            let imgPath = item.imagem ? item.imagem : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
+
+                            htmlSecao += `
+                            <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
+                                <div class="card-img">
+                                    <img src="${imgPath}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3081/3081967.png'">
+                                </div>
+                                <div class="card-info">
+                                    <span class="label">${item.nome}</span>
+                                    <span class="price">R$ ${item.preco.toFixed(2).replace('.',',')}</span>
+                                </div>
+                            </div>`;
+                        });
+                    }
+
+                    htmlSecao += `</div></div>`; // Fecha grid e section-block
+                    container.innerHTML += htmlSecao;
                 });
-                html += '</div></div>';
-                container.innerHTML = html;
             }
 
-            // 4. Abre tela de Detalhes (Passo 2)
+            // --- ABRE A TELA DE MONTAGEM ---
             abrirMontagem(nome, precoBase, configuravel) {
                 this.produtoAtual = {
                     nome: nome, base: precoBase, configuravel: configuravel,
@@ -291,24 +298,22 @@ class AppController {
                 document.getElementById('produto-nome').innerText = nome;
                 document.getElementById('produto-base-price').innerText = precoBase.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
 
-                // Mostra ou esconde seções de Açaí
+                // Configuração visual
                 const displayStyle = configuravel ? 'block' : 'none';
                 document.getElementById('card-sabores').style.display = displayStyle;
                 document.getElementById('card-recheios').style.display = displayStyle;
 
+                // Renderiza as listas usando os novos dados
                 if (configuravel) {
                     this.renderizarListaOpcoes('sabor', this.saboresDB, 'lista-sabores');
                     this.renderizarListaOpcoes('recheio', this.recheiosDB, 'lista-recheios');
                 }
-                // Adicionais sempre aparecem
                 this.renderizarListaOpcoes('adicional', this.adicionaisDB, 'lista-adicionais');
 
-                // Animação de troca de tela
                 document.querySelector('.slider-container').classList.remove('show-step-1');
                 document.querySelector('.slider-container').classList.add('show-step-2');
                 document.getElementById('barra-pedido').classList.remove('hidden');
                 
-                // Reseta scroll
                 window.scrollTo(0,0);
                 this.calcularTotal();
             }
@@ -319,10 +324,15 @@ class AppController {
                 setTimeout(() => { document.getElementById('barra-pedido').classList.add('hidden'); }, 300);
             }
 
-            // 5. Gera as listinhas (+ e -)
             renderizarListaOpcoes(tipo, dados, containerId) {
                 const container = document.getElementById(containerId);
                 container.innerHTML = "";
+                
+                if(!dados || dados.length === 0) {
+                    container.innerHTML = "<small>Sem opções disponíveis.</small>";
+                    return;
+                }
+
                 dados.forEach((item, index) => {
                     const precoTxt = item.preco ? `+ R$ ${item.preco.toFixed(2)}` : '';
                     container.innerHTML += `
@@ -339,7 +349,6 @@ class AppController {
                 });
             }
 
-            // 6. Lógica de + e -
             alterarQtd(tipo, index, delta) {
                 let listDB = (tipo === 'sabor') ? this.saboresDB : (tipo === 'recheio') ? this.recheiosDB : this.adicionaisDB;
                 let item = listDB[index];
@@ -348,20 +357,19 @@ class AppController {
                 let newQtd = currentQtd + delta;
                 if (newQtd < 0) return;
 
-                // Regras de Limite (Hardcoded por segurança)
+                // Regras (Exemplo: 2 sabores, 5 recheios)
                 if (delta > 0 && tipo === 'sabor') {
                     const total = Object.values(this.produtoAtual.selecoes.sabor).reduce((a,b)=>a+b,0);
                     if (total >= 2) return alert("Máximo de 2 sabores!");
                 }
                 if (delta > 0 && tipo === 'recheio') {
                     const total = Object.values(this.produtoAtual.selecoes.recheio).reduce((a,b)=>a+b,0);
-                    if (total >= 5) return alert("Você atingiu o limite de recheios grátis.");
+                    if (total >= 5) return alert("Limite de recheios atingido.");
                 }
 
                 if (newQtd === 0) delete this.produtoAtual.selecoes[tipo][item.nome];
                 else this.produtoAtual.selecoes[tipo][item.nome] = newQtd;
 
-                // Atualiza Botões Visuais
                 const elQtd = document.getElementById(`qtd-${tipo}-${index}`);
                 const elMinus = document.querySelector(`#row-${tipo}-${index} .minus`);
                 const elRow = document.getElementById(`row-${tipo}-${index}`);
@@ -376,7 +384,6 @@ class AppController {
                 this.calcularTotal();
             }
 
-            // 7. Calcula R$
             calcularTotal() {
                 let total = this.produtoAtual.base;
                 for (let [nome, qtd] of Object.entries(this.produtoAtual.selecoes.adicional)) {
@@ -387,20 +394,16 @@ class AppController {
                 return total;
             }
 
-            // 8. Envia para Firebase e WhatsApp
             async enviarPedido() {
                 const nome = document.getElementById('clienteNome').value.trim();
                 const zap = document.getElementById('clienteZap').value.trim();
                 const obs = document.getElementById('observacao').value.trim();
 
-                if (!nome || zap.length < 8) return alert("Por favor, preencha seu Nome e um WhatsApp válido.");
+                if (!nome || zap.length < 8) return alert("Preencha seu Nome e WhatsApp.");
                 
-                if (this.produtoAtual.configuravel) {
-                    if (Object.keys(this.produtoAtual.selecoes.sabor).length === 0) return alert("Escolha pelo menos 1 sabor!");
-                }
+                if (this.produtoAtual.configuravel && Object.keys(this.produtoAtual.selecoes.sabor).length === 0) return alert("Escolha ao menos 1 Sabor!");
 
                 const total = this.calcularTotal();
-
                 const pedidoObj = {
                     cliente: nome, telefone: zap, produto: this.produtoAtual.nome, total: total,
                     data: new Date().toISOString(), status: 'pendente',
@@ -408,13 +411,10 @@ class AppController {
                 };
 
                 try {
-                    // Salva no Realtime Database
                     await push(ref(db, `empresas/${this.empresaId}/pedidos`), pedidoObj);
                     
-                    // Monta texto do Zap
-                    let msg = `*NOVO PEDIDO - ${this.dadosEmpresa.nome_fantasia || 'Cliente'}* 🚀\n`;
-                    msg += `👤 *${nome}*\n`;
-                    msg += `🥣 *${this.produtoAtual.nome}*\n`;
+                    let msg = `*PEDIDO AÇAÍ (${this.dadosEmpresa.nome_fantasia})* 💜\n`;
+                    msg += `👤 ${nome}\n🥣 *${this.produtoAtual.nome}*\n`;
                     
                     const listar = (obj, titulo) => {
                         let txt = "";
@@ -429,26 +429,23 @@ class AppController {
                     msg += listar(this.produtoAtual.selecoes.recheio, "Recheios");
                     msg += listar(this.produtoAtual.selecoes.adicional, "Adicionais");
                     
-                    if(obs) msg += `\n📝 *Obs:* ${obs}\n`;
+                    if(obs) msg += `\n📝 Obs: ${obs}\n`;
                     msg += `\n💰 *Total: R$ ${total.toFixed(2)}*`;
 
-                    // Redireciona
                     const telLoja = this.dadosEmpresa.telefone || ""; 
                     window.open(`https://wa.me/${telLoja}?text=${encodeURIComponent(msg)}`, '_blank');
                     
-                    // Reseta
-                    setTimeout(() => location.reload(), 1000);
+                    setTimeout(() => location.reload(), 2000);
 
                 } catch (err) {
                     console.error(err);
-                    alert("Erro ao enviar pedido. Tente novamente.");
+                    alert("Erro ao enviar.");
                 }
             }
         }
 
-        // Inicialização
         const app = new AppController();
-        window.app = app; // Expõe para o HTML
+        window.app = app;
         document.addEventListener('DOMContentLoaded', () => app.init());
 
     </script>
