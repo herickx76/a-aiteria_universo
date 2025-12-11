@@ -179,7 +179,7 @@
                     </div>
 
                     <div class="menu-card" id="card-recheios">
-                        <div class="card-header">2. Recheios <small>(Grátis)</small></div>
+                        <div class="card-header">2. Recheios <small>(Até 7)</small></div>
                         <div class="options-list" id="lista-recheios"></div>
                     </div>
 
@@ -532,7 +532,7 @@
                 }
                 if (delta > 0 && tipo === 'recheio') {
                     const total = Object.values(this.produtoAtual.selecoes.recheio).reduce((a,b)=>a+b,0);
-                    if (total >= 5) return alert("Limite de recheios atingido.");
+                    if (total >= 7) return alert("Limite de recheios atingido.");
                 }
 
                 if (newQtd === 0) delete this.produtoAtual.selecoes[tipo][item.nome];
