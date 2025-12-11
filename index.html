@@ -46,7 +46,7 @@
         .show-step-3 { transform: translateX(-50%); }
         .show-step-4 { transform: translateX(-75%); }
 
-        /* Correção de Altura */
+        /* Correção de Altura (Crucial para o scroll funcionar) */
         .slider-container.show-step-1 #step-2-customization, .slider-container.show-step-1 #step-3-checkout, .slider-container.show-step-1 #step-4-success { height: 0; overflow: hidden; padding: 0; }
         .slider-container.show-step-2 #step-1-selection, .slider-container.show-step-2 #step-3-checkout, .slider-container.show-step-2 #step-4-success { height: 0; overflow: hidden; padding: 0; }
         .slider-container.show-step-3 #step-1-selection, .slider-container.show-step-3 #step-2-customization, .slider-container.show-step-3 #step-4-success { height: 0; overflow: hidden; padding: 0; }
@@ -62,9 +62,9 @@
             background: var(--white); border-radius: 12px; padding: 10px; text-align: center; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; 
             transition: transform 0.1s ease, opacity 0.6s ease, transform 0.6s ease;
-            opacity: 0; transform: translateY(30px);
+            opacity: 0; transform: translateY(30px); /* Inicial invisível */
         }
-        .size-card.visible { opacity: 1; transform: translateY(0); }
+        .size-card.visible { opacity: 1; transform: translateY(0); } /* Visível */
         .size-card:active { transform: scale(0.92) !important; transition: transform 0.1s; }
 
         .card-img img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
@@ -297,9 +297,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, child, get, push } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
-        // =========================================================
-        // CONFIGURAÇÃO
-        // =========================================================
         const ID_DA_LOJA = "universo_acai"; 
         const firebaseConfig = {
             apiKey: "AIzaSyCikTxSJLoSBJeGrNRugs1MvWxCohakwnI",
@@ -324,7 +321,7 @@
                 this.recheiosDB = [];
                 this.adicionaisDB = [];
                 this.observer = null; 
-                this.lojaAberta = false; // Estado inicial da loja
+                this.lojaAberta = false;
             }
 
             async init() {
@@ -366,7 +363,6 @@
                 const hAbre = this.dadosEmpresa.horario_abertura;
                 const hFecha = this.dadosEmpresa.horario_fechamento;
 
-                // Se não tem horário, assume aberto
                 if(!hAbre || !hFecha) {
                     this.lojaAberta = true;
                     statusDiv.innerHTML = `<span class="status-dot status-open"></span> Aberto`;
@@ -544,7 +540,7 @@
                 }
                 if (delta > 0 && tipo === 'recheio') {
                     const total = Object.values(this.produtoAtual.selecoes.recheio).reduce((a,b)=>a+b,0);
-                    if (total >= 7) return alert("Limite de recheios atingido.");
+                    if (total >= 5) return alert("Limite de recheios atingido.");
                 }
 
                 if (newQtd === 0) delete this.produtoAtual.selecoes[tipo][item.nome];
@@ -662,7 +658,6 @@
             }
 
             async finalizarPedidoNoBanco() {
-                // TRAVA DE LOJA FECHADA
                 if (!this.lojaAberta) {
                     return alert("🚫 Estamos fechados no momento! Não é possível finalizar o pedido.");
                 }
