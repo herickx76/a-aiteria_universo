@@ -60,7 +60,35 @@
         .menu-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .card-header { font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
         
-        .option-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+/* --- ATUALIZE ESTES ESTILOS NO SEU CSS --- */
+
+        /* A linha da opção agora alinha os itens ao centro verticalmente */
+        .option-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 0; /* Reduzi um pouco o padding vertical */
+            border-bottom: 1px solid #f5f5f5; 
+        }
+
+        /* O container da esquerda que segura a imagem e o texto */
+        .option-info {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Espaço entre a fotinha e o texto */
+        }
+
+        /* ESTILO NOVO: A fotinha pequena (thumbnail) */
+        .option-thumb {
+            width: 45px;  /* Tamanho fixo pequeno */
+            height: 45px; /* Tamanho fixo pequeno */
+            border-radius: 8px; /* Cantos arredondados */
+            object-fit: cover; /* Garante que a imagem não estique */
+            border: 1px solid #eee; /*Bordazinha sutil */
+            background-color: #f9f9f9;
+        }
+
+        .option-name { font-weight: 500; font-size: 0.95rem; }
         .option-name { font-weight: 500; }
         .stepper { display: flex; align-items: center; gap: 10px; }
         .step-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--primary); background: white; color: var(--primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
@@ -293,7 +321,7 @@ class AppController {
                     container.innerHTML += htmlSecao;
                 });
             }
-            
+
             // --- ABRE A TELA DE MONTAGEM ---
             abrirMontagem(nome, precoBase, configuravel) {
                 this.produtoAtual = {
@@ -329,23 +357,39 @@ class AppController {
                 document.querySelector('.slider-container').classList.add('show-step-1');
                 setTimeout(() => { document.getElementById('barra-pedido').classList.add('hidden'); }, 300);
             }
-
+// --- FUNÇÃO ATUALIZADA COM IMAGENS ---
             renderizarListaOpcoes(tipo, dados, containerId) {
                 const container = document.getElementById(containerId);
                 container.innerHTML = "";
                 
                 if(!dados || dados.length === 0) {
-                    container.innerHTML = "<small>Sem opções disponíveis.</small>";
+                    container.innerHTML = "<small style='display:block; padding:10px; color:#999'>Sem opções disponíveis.</small>";
                     return;
                 }
 
                 dados.forEach((item, index) => {
                     const precoTxt = item.preco ? `+ R$ ${item.preco.toFixed(2)}` : '';
+                    
+                    // 1. Define a imagem (Usa a do banco ou um ícone genérico de "ingrediente")
+                    // Usei um ícone de "colher/ingrediente" como padrão caso a imagem falhe
+                    const imgPlaceholder = 'https://cdn-icons-png.flaticon.com/512/1375/1375106.png';
+                    const imgSource = item.imagem ? item.imagem : imgPlaceholder;
+
                     container.innerHTML += `
                     <div class="option-row" id="row-${tipo}-${index}">
+                        
                         <div class="option-info">
-                            <div class="option-name">${item.nome} <small style="color:green; font-weight:bold">${precoTxt}</small></div>
+                            <img src="${imgSource}" 
+                                 class="option-thumb" 
+                                 onerror="this.src='${imgPlaceholder}'"
+                                 alt="${item.nome}">
+
+                            <div class="option-name">
+                                ${item.nome} 
+                                <small style="color:green; font-weight:bold; display:block; font-size:0.8rem">${precoTxt}</small>
+                            </div>
                         </div>
+
                         <div class="stepper">
                             <button type="button" class="step-btn minus hidden" onclick="app.alterarQtd('${tipo}', ${index}, -1)">-</button>
                             <span class="step-count hidden" id="qtd-${tipo}-${index}">0</span>
