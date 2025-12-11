@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* ================= ESTILOS (CSS) ================= */
+        /* ================= ESTILOS (MANTIDOS IGUAIS) ================= */
         :root {
-            --primary: #4b0082; /* Cor padrão, será sobrescrita se quiser */
+            --primary: #4b0082;
             --primary-light: #6a0dad;
             --bg: #f4f4f9;
             --white: #ffffff;
             --text: #333;
-            --gray: #888;
             --success: #25d366;
         }
 
@@ -26,7 +25,6 @@
         .header-content { display: flex; align-items: center; gap: 15px; }
         .profile-pic img { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #fff; object-fit: cover; }
         .contact-info h3 { font-size: 1.1rem; margin-bottom: 2px; }
-        .verified { color: #00bfff; font-size: 0.9rem; }
         #header-status { font-size: 0.8rem; opacity: 0.9; }
 
         /* Abas */
@@ -34,7 +32,7 @@
         .tab-btn { flex: 1; border: none; background: none; color: rgba(255,255,255,0.7); padding: 10px; cursor: pointer; border-radius: 6px; font-weight: bold; transition: 0.3s; }
         .tab-btn.active { background: var(--white); color: var(--primary); }
 
-        /* Layout & Sections */
+        /* Layout */
         .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; }
         .section-content { display: none; animation: fadeIn 0.3s; }
         .active-section { display: block; }
@@ -46,42 +44,32 @@
         .show-step-1 { transform: translateX(0%); }
         .show-step-2 { transform: translateX(-50%); }
 
-        /* Cardápio Grid */
+        /* Grid */
         .category-block { margin-bottom: 25px; }
         .cat-title { color: var(--primary); border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-bottom: 15px; }
         .size-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .size-card { background: var(--white); border-radius: 12px; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
-        .size-card:active { transform: scale(0.98); }
         .card-img img { width: 100%; height: 100px; object-fit: contain; margin-bottom: 10px; }
         .card-info .label { display: block; font-weight: bold; margin-bottom: 5px; }
         .card-info .price { color: var(--success); font-weight: bold; }
 
-        /* Step 2: Customization */
+        /* Customization UI */
         .back-header { cursor: pointer; color: var(--primary); font-weight: bold; margin-bottom: 15px; display: inline-block; }
         .product-header { background: var(--primary-light); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-        
         .menu-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .card-header { font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        .badge-required { background: #ff4444; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
-        .badge-free { background: var(--success); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; }
-
-        /* List Items */
+        
         .option-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
-        .option-info { display: flex; align-items: center; gap: 10px; }
-        .option-thumb { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; background: #eee; }
         .stepper { display: flex; align-items: center; gap: 10px; }
         .step-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--primary); background: white; color: var(--primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .selected-item { background-color: #f9f0ff; }
         .disabled { opacity: 0.4; pointer-events: none; }
         .hidden { display: none !important; }
-
-        /* Inputs */
         .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 5px; font-size: 1rem; }
 
-        /* Footer Cart */
+        /* Footer */
         .menu-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 999; }
-        .btn-finish { background: var(--success); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
-        .total-info { display: flex; flex-direction: column; }
+        .btn-finish { background: var(--success); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .total-info span { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
 
         /* Chat */
@@ -89,14 +77,12 @@
         .msg { display: flex; width: 100%; }
         .msg-bot { justify-content: flex-start; }
         .msg-user { justify-content: flex-end; }
-        .bubble { max-width: 80%; padding: 10px 15px; border-radius: 10px; position: relative; font-size: 0.95rem; }
-        .msg-bot .bubble { background: white; border-top-left-radius: 0; }
-        .msg-user .bubble { background: #dcf8c6; border-top-right-radius: 0; }
+        .bubble { max-width: 80%; padding: 10px 15px; border-radius: 10px; background: white; }
+        .msg-user .bubble { background: #dcf8c6; }
         .chat-input-area { position: fixed; bottom: 0; width: 100%; background: #f0f0f0; padding: 10px; display: flex; gap: 10px; }
-        .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: none; outline: none; }
-        .btn-send-chat { background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
-        
-        /* Loading Overlay */
+        .chat-input-area input { flex: 1; padding: 10px; border-radius: 20px; border: none; }
+        .btn-send-chat { background: var(--primary); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; }
+
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); display: flex; justify-content: center; align-items: center; color: white; flex-direction: column; z-index: 2000; }
     </style>
 </head>
@@ -104,122 +90,86 @@
 
     <div id="loading-screen">
         <i class="fas fa-circle-notch fa-spin fa-3x"></i>
-        <p style="margin-top: 15px;">Carregando loja...</p>
+        <p style="margin-top: 15px;">Conectando ao banco...</p>
     </div>
 
     <header id="main-header">
         <div class="header-content">
-            <div class="profile-pic">
-                <img id="logo-empresa" src="" onerror="this.src='https://cdn-icons-png.flaticon.com/512/185/185983.png'">
-            </div>
-            <div class="contact-info">
-                <h3 id="nome-empresa">Carregando...</h3>
-                <p id="header-status"><i class="fas fa-circle" style="color: #0f0; font-size: 10px;"></i> Aberto agora</p>
-            </div>
+            <div class="profile-pic"><img id="logo-empresa" src=""></div>
+            <div class="contact-info"><h3 id="nome-empresa">...</h3><p id="header-status">Aberto agora</p></div>
         </div>
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="app.mudarAba('cardapio')" id="btn-cardapio">CARDÁPIO 📋</button>
-            <button class="tab-btn" onclick="app.mudarAba('chat')" id="btn-chat">CHAT 💬</button>
+            <button class="tab-btn active" onclick="app.mudarAba('cardapio')" id="btn-cardapio">CARDÁPIO</button>
+            <button class="tab-btn" onclick="app.mudarAba('chat')" id="btn-chat">CHAT</button>
         </div>
     </header>
 
     <main class="main-container">
-        
         <section id="view-cardapio" class="section-content active-section">
             <div class="slider-container show-step-1">
-                
                 <div class="slide-page" id="step-1-selection">
                     <div class="brand-banner" style="text-align: center; margin-bottom: 20px;">
-                        <h2 class="menu-title">O que vamos pedir hoje? 😋</h2>
+                        <h2 class="menu-title">O que vamos pedir? 😋</h2>
                     </div>
-
                     <div id="container-produtos"></div>
                 </div>
 
                 <div class="slide-page" id="step-2-customization">
-                    <div class="back-header" onclick="app.voltarMenu()">
-                        <i class="fas fa-arrow-left"></i> Voltar
-                    </div>
-
-                    <div class="product-header">
-                        <h2 id="produto-nome" style="font-size: 1.2rem;">Produto</h2>
-                        <span id="produto-base-price" style="font-weight: bold;">R$ 0,00</span>
-                    </div>
+                    <div class="back-header" onclick="app.voltarMenu()"><i class="fas fa-arrow-left"></i> Voltar</div>
+                    <div class="product-header"><h2 id="produto-nome">Produto</h2><span id="produto-base-price">R$ 0,00</span></div>
                     
                     <form id="formPedido">
                         <div class="menu-card" id="card-sabores">
-                            <div class="card-header">
-                                1. Sabores <small id="txt-limite-sabor"></small>
-                                <span class="badge-required">Obrigatório</span>
-                            </div>
+                            <div class="card-header">1. Sabores <small>(Até 2)</small></div>
                             <div class="options-list" id="lista-sabores"></div>
                         </div>
-
                         <div class="menu-card" id="card-recheios">
-                            <div class="card-header">
-                                2. Recheios <small id="txt-limite-recheio"></small>
-                                <span class="badge-free">Grátis</span>
-                            </div>
+                            <div class="card-header">2. Recheios <small>(Grátis)</small></div>
                             <div class="options-list" id="lista-recheios"></div>
                         </div>
-
                         <div class="menu-card" id="card-adicionais">
                             <div class="card-header">3. Adicionais Pagos</div>
                             <div class="options-list" id="lista-adicionais"></div>
                         </div>
-
                         <div class="menu-card">
                             <div class="card-header">📝 Seus Dados</div>
                             <input type="text" id="clienteNome" placeholder="Seu Nome" class="input-field">
-                            <input type="tel" id="clienteZap" placeholder="Seu WhatsApp (com DDD)" class="input-field">
-                            <textarea id="observacao" placeholder="Observações (opcional)" class="input-field" rows="2"></textarea>
+                            <input type="tel" id="clienteZap" placeholder="Seu WhatsApp" class="input-field">
+                            <textarea id="observacao" placeholder="Observações..." class="input-field"></textarea>
                         </div>
-
                         <div style="height: 80px;"></div>
                     </form>
                 </div>
-
             </div>
             
             <div class="menu-footer hidden" id="barra-pedido">
-                <div class="total-info">
-                    <small>Total:</small>
-                    <span id="valorTotal">R$ 0,00</span>
-                </div>
-                <button class="btn-finish" onclick="app.enviarPedido()">
-                    Enviar Pedido <i class="fab fa-whatsapp"></i>
-                </button>
+                <div class="total-info"><small>Total:</small><span id="valorTotal">R$ 0,00</span></div>
+                <button class="btn-finish" onclick="app.enviarPedido()">Enviar <i class="fab fa-whatsapp"></i></button>
             </div>
         </section>
 
         <section id="view-chat" class="section-content hidden-section">
             <div class="chat-bg" id="chatWindow">
-                <div class="msg msg-bot">
-                    <div class="bubble">
-                        Olá! Bem-vindo(a). 💜<br>
-                        Como posso ajudar? (Pix, Endereço, Entrega...)
-                    </div>
-                </div>
+                <div class="msg msg-bot"><div class="bubble">Olá! Posso ajudar?</div></div>
             </div>
             <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Digite sua dúvida..." onkeypress="if(event.key === 'Enter') app.enviarMsg()">
+                <input type="text" id="chatInput" placeholder="Mensagem..." onkeypress="if(event.key === 'Enter') app.enviarMsg()">
                 <button class="btn-send-chat" onclick="app.enviarMsg()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </section>
-
     </main>
 
     <script type="module">
+        // =========================================================
+        // ⚠️ IMPORTANDO BIBLIOTECAS DO REALTIME DATABASE ⚠️
+        // =========================================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDatabase, ref, child, get, push, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
         // =========================================================
-        // ⚠️ CONFIGURAÇÃO DA LOJA (MUDE AQUI PARA CADA CLIENTE) ⚠️
+        // CONFIGURAÇÃO DA LOJA 
         // =========================================================
-        
-        const ID_DA_LOJA = "joao_burguer";  // <-- MUDE AQUI PARA "maria_acai", ETC.
-
-        // =========================================================
+        const ID_DA_LOJA = "joao_burguer";  
 
 const firebaseConfig = {
   apiKey: "AIzaSyCikTxSJLoSBJeGrNRugs1MvWxCohakwnI",
@@ -233,11 +183,11 @@ const firebaseConfig = {
 };
 
         const appFirebase = initializeApp(firebaseConfig);
-        const db = getFirestore(appFirebase);
+        const db = getDatabase(appFirebase); // Inicializa o Realtime DB
 
         class AppController {
             constructor() {
-                this.empresaId = ID_DA_LOJA; // Pega da variável manual
+                this.empresaId = ID_DA_LOJA;
                 this.dadosEmpresa = {};
                 this.produtoAtual = null;
                 this.saboresDB = []; 
@@ -246,7 +196,7 @@ const firebaseConfig = {
             }
 
             async init() {
-                console.log(`Iniciando sistema para a loja: ${this.empresaId}`);
+                console.log(`Iniciando Realtime DB para: ${this.empresaId}`);
                 await this.carregarDadosEmpresa();
                 await this.carregarOpcoesGlobais();
                 document.getElementById('loading-screen').style.display = 'none';
@@ -254,85 +204,82 @@ const firebaseConfig = {
 
             async carregarDadosEmpresa() {
                 try {
-                    // Busca direto usando a variável ID_DA_LOJA
-                    const docRef = doc(db, "empresas", this.empresaId);
-                    const docSnap = await getDoc(docRef);
+                    const dbRef = ref(db);
+                    // Busca em: empresas/joao_burguer
+                    const snapshot = await get(child(dbRef, `empresas/${this.empresaId}`));
 
-                    if (docSnap.exists()) {
-                        this.dadosEmpresa = docSnap.data();
+                    if (snapshot.exists()) {
+                        this.dadosEmpresa = snapshot.val(); // No Realtime usa .val()
                         
                         document.title = this.dadosEmpresa.nome_fantasia;
                         document.getElementById('nome-empresa').innerText = this.dadosEmpresa.nome_fantasia;
                         
-                        const cardapioArray = Object.entries(this.dadosEmpresa.cardapio || {}).map(([key, val]) => ({
+                        // Converte objeto JSON para Array para poder fazer loop
+                        const cardapioObj = this.dadosEmpresa.cardapio || {};
+                        const cardapioArray = Object.entries(cardapioObj).map(([key, val]) => ({
                             id: key, ...val
                         }));
                         
                         this.renderizarCardapioPrincipal(cardapioArray);
-
                     } else {
-                        document.getElementById('loading-screen').innerHTML = `
-                            <h1>Loja não encontrada</h1>
-                            <p>ID procurado: ${this.empresaId}</p>
-                            <p>Verifique a variável ID_DA_LOJA no código.</p>
-                        `;
+                        alert("Empresa não encontrada no banco de dados.");
                     }
                 } catch (error) {
-                    console.error("Erro ao carregar empresa:", error);
-                    alert("Erro de conexão.");
+                    console.error(error);
+                    alert("Erro ao conectar no banco.");
                 }
             }
 
             async carregarOpcoesGlobais() {
-                // Carrega opcionais (sabores, recheios)
-                // Se você tiver coleções específicas por empresa, mude aqui para buscar de "empresas/{id}/sabores"
-                const getList = async (col) => {
-                    const snap = await getDocs(collection(db, col));
-                    const list = [];
-                    snap.forEach(d => list.push({id: d.id, ...d.data()}));
-                    return list;
-                };
+                // Simula busca de sabores/recheios (se tiver no banco, busca, se não usa padrão)
+                const dbRef = ref(db);
                 
-                this.saboresDB = await getList('sabores');
-                this.recheiosDB = await getList('recheios');
-                this.adicionaisDB = await getList('adicionais');
+                const fetchList = async (path) => {
+                    const snap = await get(child(dbRef, path));
+                    if(snap.exists()) {
+                        // Converte objeto {0:{...}, 1:{...}} para array
+                        return Object.values(snap.val());
+                    }
+                    return [];
+                };
 
-                // Fallback de dados falsos se o banco estiver vazio
+                this.saboresDB = await fetchList('sabores');
+                this.recheiosDB = await fetchList('recheios');
+                this.adicionaisDB = await fetchList('adicionais');
+
+                // DADOS DE SEGURANÇA (Caso o banco esteja vazio)
                 if(this.saboresDB.length === 0) {
                     this.saboresDB = [{nome: "Tradicional"}, {nome: "Morango"}, {nome: "Banana"}];
                     this.recheiosDB = [{nome: "Leite em pó"}, {nome: "Granola"}, {nome: "Paçoca"}];
+                    this.adicionaisDB = [{nome: "Nutella", preco: 5.0}, {nome: "Morango", preco: 3.0}];
                 }
             }
 
             renderizarCardapioPrincipal(itens) {
                 const container = document.getElementById('container-produtos');
                 let html = '<div class="category-block"><h3 class="cat-title">Destaques</h3><div class="size-grid">';
-
-                if(itens.length === 0) html += '<p>Nenhum item no cardápio ainda.</p>';
+                
+                if(itens.length === 0) html += '<p>Cardápio vazio.</p>';
 
                 itens.forEach(item => {
-                    // Se o nome tiver "Açaí" ou "ml", abre menu de personalização. Se não, é produto simples.
-                    const isConfiguravel = item.nome.toLowerCase().includes('açaí') || item.nome.toLowerCase().includes('ml') || item.nome.toLowerCase().includes('sorvete');
+                    const isConfiguravel = item.nome.toLowerCase().includes('açaí') || item.nome.toLowerCase().includes('ml');
                     
                     html += `
                     <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
-                        <div class="card-img"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081967.png" alt="Item"></div>
+                        <div class="card-img"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081967.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3081/3081967.png'"></div>
                         <div class="card-info">
                             <span class="label">${item.nome}</span>
                             <span class="price">R$ ${item.preco.toFixed(2).replace('.',',')}</span>
                         </div>
                     </div>`;
                 });
-
                 html += '</div></div>';
                 container.innerHTML = html;
             }
 
             abrirMontagem(nome, precoBase, configuravel) {
                 this.produtoAtual = {
-                    nome: nome,
-                    base: precoBase,
-                    configuravel: configuravel,
+                    nome: nome, base: precoBase, configuravel: configuravel,
                     selecoes: { sabor: {}, recheio: {}, adicional: {} }
                 };
 
@@ -347,13 +294,11 @@ const firebaseConfig = {
                     this.renderizarListaOpcoes('sabor', this.saboresDB, 'lista-sabores');
                     this.renderizarListaOpcoes('recheio', this.recheiosDB, 'lista-recheios');
                 }
-                
                 this.renderizarListaOpcoes('adicional', this.adicionaisDB, 'lista-adicionais');
 
                 document.querySelector('.slider-container').classList.remove('show-step-1');
                 document.querySelector('.slider-container').classList.add('show-step-2');
                 document.getElementById('barra-pedido').classList.remove('hidden');
-                
                 this.calcularTotal();
             }
 
@@ -366,41 +311,29 @@ const firebaseConfig = {
             renderizarListaOpcoes(tipo, dados, containerId) {
                 const container = document.getElementById(containerId);
                 container.innerHTML = "";
-                
                 dados.forEach((item, index) => {
                     const precoTxt = item.preco ? `+ R$ ${item.preco.toFixed(2)}` : '';
-                    const html = `
+                    container.innerHTML += `
                     <div class="option-row" id="row-${tipo}-${index}">
-                        <div class="option-info">
-                            <div class="option-name">${item.nome} <small style="color:green">${precoTxt}</small></div>
-                        </div>
+                        <div class="option-info"><div class="option-name">${item.nome} <small style="color:green">${precoTxt}</small></div></div>
                         <div class="stepper">
                             <button type="button" class="step-btn minus hidden" onclick="app.alterarQtd('${tipo}', ${index}, -1)">-</button>
                             <span class="step-count hidden" id="qtd-${tipo}-${index}">0</span>
                             <button type="button" class="step-btn plus" onclick="app.alterarQtd('${tipo}', ${index}, 1)">+</button>
                         </div>
                     </div>`;
-                    container.innerHTML += html;
                 });
             }
 
             alterarQtd(tipo, index, delta) {
                 let listDB = (tipo === 'sabor') ? this.saboresDB : (tipo === 'recheio') ? this.recheiosDB : this.adicionaisDB;
                 let item = listDB[index];
-                
                 let currentQtd = this.produtoAtual.selecoes[tipo][item.nome] || 0;
                 let newQtd = currentQtd + delta;
                 if (newQtd < 0) return;
 
-                // Limites
-                if (delta > 0 && tipo === 'sabor') {
-                    let total = Object.values(this.produtoAtual.selecoes.sabor).reduce((a,b)=>a+b,0);
-                    if (total >= 2) return alert("Máximo de 2 sabores!");
-                }
-                if (delta > 0 && tipo === 'recheio') {
-                    let total = Object.values(this.produtoAtual.selecoes.recheio).reduce((a,b)=>a+b,0);
-                    if (total >= 5) return alert("Limite de recheios atingido!");
-                }
+                if (delta > 0 && tipo === 'sabor' && Object.values(this.produtoAtual.selecoes.sabor).reduce((a,b)=>a+b,0) >= 2) return alert("Máximo de 2 sabores!");
+                if (delta > 0 && tipo === 'recheio' && Object.values(this.produtoAtual.selecoes.recheio).reduce((a,b)=>a+b,0) >= 5) return alert("Limite de recheios atingido!");
 
                 if (newQtd === 0) delete this.produtoAtual.selecoes[tipo][item.nome];
                 else this.produtoAtual.selecoes[tipo][item.nome] = newQtd;
@@ -410,15 +343,8 @@ const firebaseConfig = {
                 const elRow = document.getElementById(`row-${tipo}-${index}`);
                 
                 elQtd.innerText = newQtd;
-                if (newQtd > 0) {
-                    elQtd.classList.remove('hidden');
-                    elMinus.classList.remove('hidden');
-                    elRow.classList.add('selected-item');
-                } else {
-                    elQtd.classList.add('hidden');
-                    elMinus.classList.add('hidden');
-                    elRow.classList.remove('selected-item');
-                }
+                if(newQtd > 0) { elQtd.classList.remove('hidden'); elMinus.classList.remove('hidden'); elRow.classList.add('selected-item'); }
+                else { elQtd.classList.add('hidden'); elMinus.classList.add('hidden'); elRow.classList.remove('selected-item'); }
 
                 this.calcularTotal();
             }
@@ -438,58 +364,37 @@ const firebaseConfig = {
                 const zap = document.getElementById('clienteZap').value;
                 const obs = document.getElementById('observacao').value;
 
-                if (!nome || !zap) return alert("Preencha seu Nome e WhatsApp!");
-                
-                if (this.produtoAtual.configuravel) {
-                    const qtdSabores = Object.keys(this.produtoAtual.selecoes.sabor).length;
-                    if (qtdSabores === 0) return alert("Selecione pelo menos 1 sabor!");
-                }
+                if (!nome || !zap) return alert("Preencha Nome e WhatsApp!");
+                if (this.produtoAtual.configuravel && Object.keys(this.produtoAtual.selecoes.sabor).length === 0) return alert("Escolha um sabor!");
 
                 const total = this.calcularTotal();
-
                 const pedidoObj = {
-                    cliente: nome,
-                    telefone: zap,
-                    produto: this.produtoAtual.nome,
-                    total: total,
-                    data: new Date().toISOString(),
-                    status: 'pendente',
-                    detalhes: this.produtoAtual.selecoes,
-                    obs: obs
+                    cliente: nome, telefone: zap, produto: this.produtoAtual.nome, total: total,
+                    data: new Date().toISOString(), status: 'pendente',
+                    detalhes: this.produtoAtual.selecoes, obs: obs
                 };
 
                 try {
-                    // Salva na subcoleção correta da empresa configurada na variável
-                    await addDoc(collection(db, "empresas", this.empresaId, "pedidos"), pedidoObj);
+                    // GRAVAR NO REALTIME DATABASE (Usando push)
+                    const pedidosRef = ref(db, `empresas/${this.empresaId}/pedidos`);
+                    await push(pedidosRef, pedidoObj);
                     
-                    let msg = `*NOVO PEDIDO - ${this.dadosEmpresa.nome_fantasia}*\n`;
-                    msg += `👤 Cliente: ${nome}\n`;
-                    msg += `🥣 Pedido: ${this.produtoAtual.nome}\n`;
-                    
-                    const listar = (obj, titulo) => {
-                        let txt = "";
-                        if(Object.keys(obj).length > 0) {
-                            txt += `\n*${titulo}:*\n`;
-                            for(let [k,v] of Object.entries(obj)) txt += `- ${v}x ${k}\n`;
-                        }
-                        return txt;
-                    };
-
+                    // Monta msg Zap
+                    let msg = `*NOVO PEDIDO - ${this.dadosEmpresa.nome_fantasia || 'Loja'}*\n👤 ${nome}\n🥣 ${this.produtoAtual.nome}\n`;
+                    const listar = (o, t) => { let x=""; if(Object.keys(o).length) { x+=`\n*${t}*\n`; for(let[k,v] of Object.entries(o)) x+=`- ${v}x ${k}\n`; } return x; };
                     msg += listar(this.produtoAtual.selecoes.sabor, "Sabores");
                     msg += listar(this.produtoAtual.selecoes.recheio, "Recheios");
                     msg += listar(this.produtoAtual.selecoes.adicional, "Adicionais");
-                    
-                    if(obs) msg += `\n📝 Obs: ${obs}\n`;
-                    msg += `\n💰 *Total: R$ ${total.toFixed(2)}*`;
+                    if(obs) msg += `\n📝 Obs: ${obs}`;
+                    msg += `\n💰 *R$ ${total.toFixed(2)}*`;
 
-                    const zapLoja = this.dadosEmpresa.telefone;
-                    window.open(`https://wa.me/${zapLoja}?text=${encodeURIComponent(msg)}`, '_blank');
-                    
+                    const telLoja = this.dadosEmpresa.telefone || "5511999999999";
+                    window.open(`https://wa.me/${telLoja}?text=${encodeURIComponent(msg)}`, '_blank');
                     location.reload();
 
                 } catch (err) {
                     console.error(err);
-                    alert("Erro ao salvar pedido.");
+                    alert("Erro ao salvar pedido: " + err.message);
                 }
             }
 
@@ -514,19 +419,13 @@ const firebaseConfig = {
                 const input = document.getElementById('chatInput');
                 const txt = input.value.trim();
                 if(!txt) return;
-
                 const chatWin = document.getElementById('chatWindow');
                 chatWin.insertAdjacentHTML('beforeend', `<div class="msg msg-user"><div class="bubble">${txt}</div></div>`);
                 input.value = "";
                 chatWin.scrollTop = chatWin.scrollHeight;
-
                 setTimeout(() => {
-                    let resp = "Não entendi, sou um robô básico. Por favor, me chame no WhatsApp acima!";
-                    const lower = txt.toLowerCase();
-                    if(lower.includes('pix')) resp = "Nossa chave Pix é o CNPJ ou Celular cadastrado!";
-                    if(lower.includes('hora')) resp = "Estamos abertos agora!";
-                    if(lower.includes('endereço') || lower.includes('onde')) resp = "Veja nossa localização no Google Maps.";
-
+                    let resp = "Sou um robô simples. Chame no Zap!";
+                    if(txt.toLowerCase().includes('pix')) resp = "Chave Pix: CNPJ da loja.";
                     chatWin.insertAdjacentHTML('beforeend', `<div class="msg msg-bot"><div class="bubble">${resp}</div></div>`);
                     chatWin.scrollTop = chatWin.scrollHeight;
                 }, 800);
@@ -534,12 +433,8 @@ const firebaseConfig = {
         }
 
         const app = new AppController();
-        window.app = app; 
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            app.init();
-        });
-
+        window.app = app;
+        document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
 </html>
