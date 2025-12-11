@@ -15,6 +15,7 @@
             --white: #ffffff;
             --text: #333;
             --success: #25d366;
+            --danger: #ff4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -27,12 +28,14 @@
         .contact-info h3 { font-size: 1.2rem; margin-bottom: 2px; }
         #header-status { font-size: 0.8rem; opacity: 0.9; }
 
-        /* Layout */
+        /* Layout Slider (3 Telas: Menu, Montagem, Checkout) */
         .main-container { max-width: 600px; margin: 0 auto; overflow: hidden; padding-top: 20px; }
-        .slider-container { display: flex; width: 200%; transition: transform 0.4s ease; }
-        .slide-page { width: 50%; padding: 15px; }
-        .show-step-1 { transform: translateX(0%); }
-        .show-step-2 { transform: translateX(-50%); }
+        .slider-container { display: flex; width: 300%; transition: transform 0.4s ease; } /* Aumentei para 300% */
+        .slide-page { width: 33.33%; padding: 15px; } /* Dividido por 3 */
+        
+        .show-step-1 { transform: translateX(0%); }      /* Menu */
+        .show-step-2 { transform: translateX(-33.33%); } /* Montagem */
+        .show-step-3 { transform: translateX(-66.66%); } /* Checkout */
 
         /* SEÇÕES E GRID DE PRODUTOS */
         .section-block { margin-bottom: 30px; }
@@ -60,49 +63,35 @@
         .menu-card { background: white; border-radius: 10px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .card-header { font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
         
-/* --- ATUALIZE ESTES ESTILOS NO SEU CSS --- */
-
-        /* A linha da opção agora alinha os itens ao centro verticalmente */
-        .option-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 0; /* Reduzi um pouco o padding vertical */
-            border-bottom: 1px solid #f5f5f5; 
-        }
-
-        /* O container da esquerda que segura a imagem e o texto */
-        .option-info {
-            display: flex;
-            align-items: center;
-            gap: 12px; /* Espaço entre a fotinha e o texto */
-        }
-
-        /* ESTILO NOVO: A fotinha pequena (thumbnail) */
-        .option-thumb {
-            width: 45px;  /* Tamanho fixo pequeno */
-            height: 45px; /* Tamanho fixo pequeno */
-            border-radius: 8px; /* Cantos arredondados */
-            object-fit: cover; /* Garante que a imagem não estique */
-            border: 1px solid #eee; /*Bordazinha sutil */
-            background-color: #f9f9f9;
-        }
-
+        /* Opções (Sabores/Recheios) */
+        .option-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+        .option-info { display: flex; align-items: center; gap: 12px; }
+        .option-thumb { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; background-color: #f9f9f9; }
         .option-name { font-weight: 500; font-size: 0.95rem; }
-        .option-name { font-weight: 500; }
         .stepper { display: flex; align-items: center; gap: 10px; }
         .step-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--primary); background: white; color: var(--primary); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
         .selected-item { background-color: #fcfaff; }
         
         .hidden { display: none !important; }
-        .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; font-size: 1rem; }
+        .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 1rem; }
+        .input-label { font-size: 0.9rem; font-weight: bold; color: #555; margin-bottom: 5px; display: block; }
 
-        /* Barra Inferior */
+        /* Barra Inferior (Dinâmica) */
         .menu-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; z-index: 999; }
-        .btn-finish { background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .btn-action { background: var(--success); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-weight: bold; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .btn-cart-view { background: var(--primary); width: 100%; justify-content: space-between; }
         .total-info { display: flex; flex-direction: column; }
         .total-info small { color: #666; font-size: 0.8rem; }
         .total-info span { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+
+        /* Estilos do Carrinho (Lista de itens) */
+        .cart-item { border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 10px; background: #fff; position: relative; }
+        .cart-item-title { font-weight: bold; color: var(--primary); }
+        .cart-item-desc { font-size: 0.85rem; color: #666; margin: 5px 0; }
+        .cart-item-price { font-weight: bold; color: var(--success); }
+        .btn-remove { position: absolute; top: 10px; right: 10px; color: var(--danger); cursor: pointer; background: none; border: none; font-size: 1.1rem; }
+
+        select.input-field { background: white; }
 
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); display: flex; justify-content: center; align-items: center; color: white; flex-direction: column; z-index: 2000; }
     </style>
@@ -133,9 +122,8 @@
                 <div class="brand-banner" style="text-align: center; margin-bottom: 25px;">
                     <h2 style="color: var(--primary);">Cardápio Digital 💜</h2>
                 </div>
-
                 <div id="container-produtos"></div>
-            </div>
+                <div style="height: 60px;"></div> </div>
 
             <div class="slide-page" id="step-2-customization">
                 <div class="back-header" onclick="app.voltarMenu()">
@@ -162,60 +150,135 @@
                         <div class="card-header">3. Adicionais Pagos</div>
                         <div class="options-list" id="lista-adicionais"></div>
                     </div>
-
+                    
                     <div class="menu-card">
-                        <div class="card-header">📝 Finalizar</div>
-                        <input type="text" id="clienteNome" placeholder="Seu Nome" class="input-field">
-                        <input type="tel" id="clienteZap" placeholder="Seu WhatsApp" class="input-field">
-                        <textarea id="observacao" placeholder="Observações..." class="input-field" rows="2"></textarea>
+                         <div class="card-header">📝 Observação do Item</div>
+                         <textarea id="obs-item" placeholder="Ex: Sem calda, capricha no leite em pó..." class="input-field" rows="2"></textarea>
                     </div>
+
                     <div style="height: 100px;"></div>
                 </form>
             </div>
+
+            <div class="slide-page" id="step-3-checkout">
+                <div class="back-header" onclick="app.voltarMenu()">
+                    <i class="fas fa-chevron-left"></i> Voltar ao Menu
+                </div>
+
+                <h2 class="section-title"><i class="fas fa-shopping-cart"></i> Seu Carrinho</h2>
+                
+                <div id="lista-itens-carrinho">
+                    </div>
+
+                <h2 class="section-title" style="margin-top: 20px;"><i class="fas fa-map-marker-alt"></i> Entrega</h2>
+                <div class="menu-card">
+                    <label class="input-label">Rua / Logradouro</label>
+                    <input type="text" id="end-rua" class="input-field" placeholder="Ex: Av. Principal">
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <div style="flex: 1;">
+                            <label class="input-label">Número</label>
+                            <input type="text" id="end-num" class="input-field" placeholder="123">
+                        </div>
+                        <div style="flex: 2;">
+                            <label class="input-label">Bairro</label>
+                            <input type="text" id="end-bairro" class="input-field" placeholder="Centro">
+                        </div>
+                    </div>
+
+                    <label class="input-label">Ponto de Referência</label>
+                    <input type="text" id="end-ref" class="input-field" placeholder="Ex: Próximo ao mercado...">
+                </div>
+
+                <h2 class="section-title"><i class="fas fa-user"></i> Seus Dados</h2>
+                <div class="menu-card">
+                    <label class="input-label">Seu Nome</label>
+                    <input type="text" id="clienteNome" placeholder="João Silva" class="input-field">
+                    
+                    <label class="input-label">Seu WhatsApp</label>
+                    <input type="tel" id="clienteZap" placeholder="(11) 99999-9999" class="input-field">
+                </div>
+
+                <h2 class="section-title"><i class="fas fa-wallet"></i> Pagamento</h2>
+                <div class="menu-card">
+                    <label class="input-label">Forma de Pagamento</label>
+                    <select id="forma-pagamento" class="input-field" onchange="app.verificarTroco(this)">
+                        <option value="Pix">Pix (Chave CPF/CNPJ)</option>
+                        <option value="Cartão de Crédito">Cartão de Crédito</option>
+                        <option value="Cartão de Débito">Cartão de Débito</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+
+                    <div id="campo-troco" class="hidden">
+                        <label class="input-label">Troco para quanto?</label>
+                        <input type="text" id="valor-troco" class="input-field" placeholder="Ex: 50,00">
+                    </div>
+                </div>
+
+                <div style="height: 100px;"></div>
+            </div>
+
         </div>
         
-        <div class="menu-footer hidden" id="barra-pedido">
+        <div class="menu-footer hidden" id="barra-adicionar">
             <div class="total-info">
-                <small>Total:</small>
-                <span id="valorTotal">R$ 0,00</span>
+                <small>Total do Item:</small>
+                <span id="valorTotalItem">R$ 0,00</span>
             </div>
-            <button class="btn-finish" onclick="app.enviarPedido()">
-                Concluir <i class="fab fa-whatsapp"></i>
+            <button class="btn-action" onclick="app.adicionarAoCarrinho()">
+                Adicionar <i class="fas fa-plus"></i>
             </button>
         </div>
+
+        <div class="menu-footer hidden" id="barra-ver-carrinho" style="background: transparent; box-shadow: none; pointer-events: none;">
+            <button class="btn-action btn-cart-view" onclick="app.abrirCheckout()" style="pointer-events: all; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <span><i class="fas fa-shopping-bag"></i> Ver Carrinho (<span id="count-carrinho">0</span>)</span>
+                <span id="total-carrinho-float">R$ 0,00</span>
+            </button>
+        </div>
+
+        <div class="menu-footer hidden" id="barra-finalizar">
+            <div class="total-info">
+                <small>Total Final:</small>
+                <span id="valorTotalFinal">R$ 0,00</span>
+            </div>
+            <button class="btn-action" onclick="app.enviarPedidoZap()" style="background: #25d366;">
+                Enviar Pedido <i class="fab fa-whatsapp"></i>
+            </button>
+        </div>
+
     </main>
 
     <script type="module">
-        // =========================================================
-        // ⚠️ IMPORTANDO BIBLIOTECAS DO REALTIME DATABASE ⚠️
-        // =========================================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import { getDatabase, ref, child, get, push, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+        import { getDatabase, ref, child, get, push } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
         // =========================================================
-        // CONFIGURAÇÃO DA LOJA 
+        // CONFIGURAÇÃO
         // =========================================================
-        const ID_DA_LOJA = "universo_acai";  
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCikTxSJLoSBJeGrNRugs1MvWxCohakwnI",
-  authDomain: "database-anotador.firebaseapp.com",
-  databaseURL: "https://database-anotador-default-rtdb.firebaseio.com",
-  projectId: "database-anotador",
-  storageBucket: "database-anotador.firebasestorage.app",
-  messagingSenderId: "1026172295848",
-  appId: "1:1026172295848:web:b5193909feee24ac8d409d",
-  measurementId: "G-L1Z0YKXT9N"
-};
+        const ID_DA_LOJA = "universo_acai"; 
+        const firebaseConfig = {
+            apiKey: "AIzaSyCikTxSJLoSBJeGrNRugs1MvWxCohakwnI",
+            authDomain: "database-anotador.firebaseapp.com",
+            databaseURL: "https://database-anotador-default-rtdb.firebaseio.com",
+            projectId: "database-anotador",
+            storageBucket: "database-anotador.firebasestorage.app",
+            messagingSenderId: "1026172295848",
+            appId: "1:1026172295848:web:b5193909feee24ac8d409d"
+        };
 
         const appFirebase = initializeApp(firebaseConfig);
-        const db = getDatabase(appFirebase); // Inicializa o Realtime DB
+        const db = getDatabase(appFirebase);
 
-class AppController {
+        class AppController {
             constructor() {
                 this.empresaId = ID_DA_LOJA;
                 this.dadosEmpresa = {};
+                this.carrinho = []; // ARRAY DO CARRINHO
+                
+                // Variáveis temporárias do item sendo montado
                 this.produtoAtual = null;
+                
                 this.saboresDB = []; 
                 this.recheiosDB = [];
                 this.adicionaisDB = [];
@@ -224,7 +287,15 @@ class AppController {
             async init() {
                 try {
                     await this.carregarDadosEmpresa();
-                    await this.carregarOpcoesGlobais(); // Busca sabores_acai, etc.
+                    await this.carregarOpcoesGlobais();
+                    
+                    // Tenta recuperar carrinho salvo (opcional)
+                    const salvo = localStorage.getItem('meuCarrinhoAcai');
+                    if(salvo) {
+                        this.carrinho = JSON.parse(salvo);
+                        this.atualizarBarraFlutuante();
+                    }
+
                 } catch (e) {
                     console.error("Erro:", e);
                 }
@@ -234,76 +305,45 @@ class AppController {
             async carregarDadosEmpresa() {
                 const dbRef = ref(db);
                 const snapshot = await get(child(dbRef, `empresas/${this.empresaId}`));
-
                 if (snapshot.exists()) {
                     this.dadosEmpresa = snapshot.val();
-                    
                     document.title = this.dadosEmpresa.nome_fantasia;
                     document.getElementById('nome-empresa').innerText = this.dadosEmpresa.nome_fantasia;
-                    
-                    if (this.dadosEmpresa.logo) {
-                        document.getElementById('logo-empresa').src = `imagens/${this.dadosEmpresa.logo}`;
-                    }
-
-                    // Renderiza o cardápio segmentado
+                    if (this.dadosEmpresa.logo) document.getElementById('logo-empresa').src = `imagens/${this.dadosEmpresa.logo}`;
                     this.renderizarCardapioSegmentado(this.dadosEmpresa.cardapio || {});
-
                 } else {
                     alert("Loja não encontrada.");
                 }
             }
 
-            // --- CARREGA OS DADOS NOVOS (sabores_acai, etc) ---
             async carregarOpcoesGlobais() {
                 const dbRef = ref(db);
                 const fetchList = async (path) => {
                     const snap = await get(child(dbRef, path));
                     return snap.exists() ? Object.values(snap.val()) : [];
                 };
-
-                // Agora busca os nomes corretos que você pediu
                 this.saboresDB = await fetchList('sabores_acai');
                 this.recheiosDB = await fetchList('recheios_acai');
                 this.adicionaisDB = await fetchList('adds_acai');
             }
 
-// --- RENDERIZA O CARDÁPIO DIVIDIDO EM SEÇÕES ---
             renderizarCardapioSegmentado(cardapioObj) {
                 const container = document.getElementById('container-produtos');
                 container.innerHTML = "";
-
                 if (Object.keys(cardapioObj).length === 0) {
                     container.innerHTML = "<p>Cardápio vazio.</p>";
                     return;
                 }
-
-                // Loop para cada SEÇÃO
                 Object.entries(cardapioObj).forEach(([chaveSecao, dadosSecao]) => {
-                    
                     let htmlSecao = `
                     <div class="section-block">
                         <h3 class="section-title">${dadosSecao.titulo}</h3>
                         <div class="size-grid">`;
-
                     if(dadosSecao.itens) {
                         Object.entries(dadosSecao.itens).forEach(([chaveItem, item]) => {
-                            
-                            // ==================================================
-                            // 🔍 O SEGREDO ESTÁ AQUI EMBAIXO:
-                            // ==================================================
                             const nome = item.nome.toLowerCase();
-                            
-                            // Verifica se o nome contém QUALQUER uma dessas palavras
-                            const isConfiguravel = nome.includes('isopor') || 
-                                                   nome.includes('copo') || 
-                                                   nome.includes('açaí') ||
-                                                   nome.includes('tigela') ||
-                                                   nome.includes('barca') ||
-                                                   nome.includes('ml') ||    // Pega "300ml", "500ml"
-                                                   nome.includes('litro');   // Pega "1 Litro"
-                            
+                            const isConfiguravel = nome.includes('isopor') || nome.includes('copo') || nome.includes('açaí') || nome.includes('tigela') || nome.includes('barca') || nome.includes('ml') || nome.includes('litro');
                             let imgPath = item.imagem ? item.imagem : 'https://cdn-icons-png.flaticon.com/512/3081/3081967.png';
-
                             htmlSecao += `
                             <div class="size-card" onclick="app.abrirMontagem('${item.nome}', ${item.preco}, ${isConfiguravel})">
                                 <div class="card-img">
@@ -316,80 +356,90 @@ class AppController {
                             </div>`;
                         });
                     }
-
                     htmlSecao += `</div></div>`;
                     container.innerHTML += htmlSecao;
                 });
             }
 
-            // --- ABRE A TELA DE MONTAGEM ---
+            // --- FLUXO DE NAVEGAÇÃO ---
+
+            voltarMenu() {
+                document.querySelector('.slider-container').className = 'slider-container show-step-1';
+                document.getElementById('barra-adicionar').classList.add('hidden');
+                document.getElementById('barra-finalizar').classList.add('hidden');
+                this.atualizarBarraFlutuante(); // Mostra o carrinho se tiver itens
+                window.scrollTo(0,0);
+            }
+
+            abrirCheckout() {
+                if(this.carrinho.length === 0) return alert("Seu carrinho está vazio!");
+                
+                this.renderizarCarrinho();
+                
+                document.querySelector('.slider-container').className = 'slider-container show-step-3';
+                document.getElementById('barra-ver-carrinho').classList.add('hidden'); // Esconde o botão flutuante
+                document.getElementById('barra-finalizar').classList.remove('hidden'); // Mostra botão de enviar zap
+                window.scrollTo(0,0);
+            }
+
+            // --- MONTAGEM DO PRODUTO ---
+            
             abrirMontagem(nome, precoBase, configuravel) {
+                // Reset produto atual
                 this.produtoAtual = {
-                    nome: nome, base: precoBase, configuravel: configuravel,
-                    selecoes: { sabor: {}, recheio: {}, adicional: {} }
+                    idTemp: Date.now(), // ID único pro carrinho
+                    nome: nome, 
+                    base: precoBase, 
+                    configuravel: configuravel,
+                    selecoes: { sabor: {}, recheio: {}, adicional: {} },
+                    obs: ""
                 };
 
                 document.getElementById('produto-nome').innerText = nome;
                 document.getElementById('produto-base-price').innerText = precoBase.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+                document.getElementById('obs-item').value = ""; // Limpa obs
 
-                // Configuração visual
                 const displayStyle = configuravel ? 'block' : 'none';
                 document.getElementById('card-sabores').style.display = displayStyle;
                 document.getElementById('card-recheios').style.display = displayStyle;
 
-                // Renderiza as listas usando os novos dados
                 if (configuravel) {
                     this.renderizarListaOpcoes('sabor', this.saboresDB, 'lista-sabores');
                     this.renderizarListaOpcoes('recheio', this.recheiosDB, 'lista-recheios');
                 }
                 this.renderizarListaOpcoes('adicional', this.adicionaisDB, 'lista-adicionais');
 
-                document.querySelector('.slider-container').classList.remove('show-step-1');
-                document.querySelector('.slider-container').classList.add('show-step-2');
-                document.getElementById('barra-pedido').classList.remove('hidden');
+                // Navegação
+                document.querySelector('.slider-container').className = 'slider-container show-step-2';
+                document.getElementById('barra-ver-carrinho').classList.add('hidden');
+                document.getElementById('barra-adicionar').classList.remove('hidden');
                 
                 window.scrollTo(0,0);
-                this.calcularTotal();
+                this.calcularTotalItem();
             }
 
-            voltarMenu() {
-                document.querySelector('.slider-container').classList.remove('show-step-2');
-                document.querySelector('.slider-container').classList.add('show-step-1');
-                setTimeout(() => { document.getElementById('barra-pedido').classList.add('hidden'); }, 300);
-            }
-// --- FUNÇÃO ATUALIZADA COM IMAGENS ---
             renderizarListaOpcoes(tipo, dados, containerId) {
                 const container = document.getElementById(containerId);
                 container.innerHTML = "";
-                
                 if(!dados || dados.length === 0) {
-                    container.innerHTML = "<small style='display:block; padding:10px; color:#999'>Sem opções disponíveis.</small>";
+                    container.innerHTML = "<small style='display:block; padding:10px; color:#999'>Sem opções.</small>";
                     return;
                 }
+                const imgPlaceholder = 'https://cdn-icons-png.flaticon.com/512/1375/1375106.png';
 
                 dados.forEach((item, index) => {
                     const precoTxt = item.preco ? `+ R$ ${item.preco.toFixed(2)}` : '';
-                    
-                    // 1. Define a imagem (Usa a do banco ou um ícone genérico de "ingrediente")
-                    // Usei um ícone de "colher/ingrediente" como padrão caso a imagem falhe
-                    const imgPlaceholder = 'https://cdn-icons-png.flaticon.com/512/1375/1375106.png';
                     const imgSource = item.imagem ? item.imagem : imgPlaceholder;
 
                     container.innerHTML += `
                     <div class="option-row" id="row-${tipo}-${index}">
-                        
                         <div class="option-info">
-                            <img src="${imgSource}" 
-                                 class="option-thumb" 
-                                 onerror="this.src='${imgPlaceholder}'"
-                                 alt="${item.nome}">
-
+                            <img src="${imgSource}" class="option-thumb" onerror="this.src='${imgPlaceholder}'">
                             <div class="option-name">
                                 ${item.nome} 
                                 <small style="color:green; font-weight:bold; display:block; font-size:0.8rem">${precoTxt}</small>
                             </div>
                         </div>
-
                         <div class="stepper">
                             <button type="button" class="step-btn minus hidden" onclick="app.alterarQtd('${tipo}', ${index}, -1)">-</button>
                             <span class="step-count hidden" id="qtd-${tipo}-${index}">0</span>
@@ -407,7 +457,6 @@ class AppController {
                 let newQtd = currentQtd + delta;
                 if (newQtd < 0) return;
 
-                // Regras (Exemplo: 2 sabores, 5 recheios)
                 if (delta > 0 && tipo === 'sabor') {
                     const total = Object.values(this.produtoAtual.selecoes.sabor).reduce((a,b)=>a+b,0);
                     if (total >= 2) return alert("Máximo de 2 sabores!");
@@ -430,66 +479,178 @@ class AppController {
                 } else {
                     elQtd.classList.add('hidden'); elMinus.classList.add('hidden'); elRow.classList.remove('selected-item');
                 }
-
-                this.calcularTotal();
+                this.calcularTotalItem();
             }
 
-            calcularTotal() {
+            calcularTotalItem() {
                 let total = this.produtoAtual.base;
                 for (let [nome, qtd] of Object.entries(this.produtoAtual.selecoes.adicional)) {
                     let item = this.adicionaisDB.find(i => i.nome === nome);
                     if (item && item.preco) total += (item.preco * qtd);
                 }
-                document.getElementById('valorTotal').innerText = total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+                this.produtoAtual.totalCalculado = total;
+                document.getElementById('valorTotalItem').innerText = total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
                 return total;
             }
 
-            async enviarPedido() {
+            // --- LÓGICA DO CARRINHO ---
+
+            adicionarAoCarrinho() {
+                // Validação
+                if (this.produtoAtual.configuravel && Object.keys(this.produtoAtual.selecoes.sabor).length === 0) {
+                    return alert("Escolha ao menos 1 Sabor!");
+                }
+
+                // Pega a observação deste item
+                this.produtoAtual.obs = document.getElementById('obs-item').value.trim();
+
+                // Adiciona ao array
+                this.carrinho.push(this.produtoAtual);
+                
+                // Salva localmente para não perder se recarregar
+                localStorage.setItem('meuCarrinhoAcai', JSON.stringify(this.carrinho));
+
+                alert("Item adicionado ao carrinho!");
+                this.voltarMenu(); // Volta pro menu
+            }
+
+            atualizarBarraFlutuante() {
+                const count = this.carrinho.length;
+                if (count > 0) {
+                    let total = this.carrinho.reduce((acc, item) => acc + item.totalCalculado, 0);
+                    document.getElementById('count-carrinho').innerText = count;
+                    document.getElementById('total-carrinho-float').innerText = total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+                    document.getElementById('barra-ver-carrinho').classList.remove('hidden');
+                } else {
+                    document.getElementById('barra-ver-carrinho').classList.add('hidden');
+                }
+            }
+
+            renderizarCarrinho() {
+                const container = document.getElementById('lista-itens-carrinho');
+                container.innerHTML = "";
+                let totalGeral = 0;
+
+                this.carrinho.forEach((item, index) => {
+                    totalGeral += item.totalCalculado;
+                    
+                    // Monta texto dos ingredientes
+                    let desc = [];
+                    if(item.selecoes) {
+                        for(let k in item.selecoes.sabor) desc.push(`${item.selecoes.sabor[k]}x ${k}`);
+                        for(let k in item.selecoes.recheio) desc.push(`+ ${k}`);
+                        for(let k in item.selecoes.adicional) desc.push(`+ ${k}`);
+                    }
+                    if(item.obs) desc.push(`Obs: ${item.obs}`);
+
+                    container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-title">${item.nome}</div>
+                        <div class="cart-item-desc">${desc.join(', ')}</div>
+                        <div class="cart-item-price">R$ ${item.totalCalculado.toFixed(2).replace('.',',')}</div>
+                        <button class="btn-remove" onclick="app.removerDoCarrinho(${index})"><i class="fas fa-trash"></i></button>
+                    </div>`;
+                });
+
+                document.getElementById('valorTotalFinal').innerText = totalGeral.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            }
+
+            removerDoCarrinho(index) {
+                if(confirm("Remover este item?")) {
+                    this.carrinho.splice(index, 1);
+                    localStorage.setItem('meuCarrinhoAcai', JSON.stringify(this.carrinho));
+                    
+                    if(this.carrinho.length === 0) this.voltarMenu();
+                    else this.renderizarCarrinho();
+                }
+            }
+
+            // --- CHECKOUT E ENVIO ---
+
+            verificarTroco(select) {
+                const div = document.getElementById('campo-troco');
+                if(select.value === 'Dinheiro') div.classList.remove('hidden');
+                else div.classList.add('hidden');
+            }
+
+            async enviarPedidoZap() {
+                // Validações
+                const rua = document.getElementById('end-rua').value.trim();
+                const bairro = document.getElementById('end-bairro').value.trim();
+                const num = document.getElementById('end-num').value.trim();
+                const refEnd = document.getElementById('end-ref').value.trim();
+                
                 const nome = document.getElementById('clienteNome').value.trim();
                 const zap = document.getElementById('clienteZap').value.trim();
-                const obs = document.getElementById('observacao').value.trim();
+                const pag = document.getElementById('forma-pagamento').value;
+                const troco = document.getElementById('valor-troco').value.trim();
 
-                if (!nome || zap.length < 8) return alert("Preencha seu Nome e WhatsApp.");
+                if(!rua || !bairro || !num || !nome || zap.length < 8) {
+                    return alert("Preencha o Endereço completo, Nome e WhatsApp.");
+                }
+
+                if(pag === 'Dinheiro' && !troco) {
+                    return alert("Informe o valor para troco (ou 'sem troco').");
+                }
+
+                // Montar Mensagem
+                let totalGeral = this.carrinho.reduce((acc, item) => acc + item.totalCalculado, 0);
                 
-                if (this.produtoAtual.configuravel && Object.keys(this.produtoAtual.selecoes.sabor).length === 0) return alert("Escolha ao menos 1 Sabor!");
+                let msg = `*NOVO PEDIDO - ${this.dadosEmpresa.nome_fantasia}* 💜\n\n`;
+                msg += `👤 *Cliente:* ${nome}\n`;
+                msg += `📱 *Zap:* ${zap}\n\n`;
+                
+                msg += `🛒 *ITENS DO PEDIDO:*\n`;
+                this.carrinho.forEach((item, i) => {
+                    msg += `------------------------------\n`;
+                    msg += `*${i+1}. ${item.nome}* (R$ ${item.totalCalculado.toFixed(2)})\n`;
+                    
+                    // Detalhes
+                    const addSabor = (obj) => Object.entries(obj).forEach(([k,v]) => msg += `   ▫️ ${v}x ${k}\n`);
+                    const addResto = (obj) => Object.entries(obj).forEach(([k,v]) => msg += `   ▫️ + ${k} (${v}x)\n`);
+                    
+                    if(item.selecoes) {
+                        addSabor(item.selecoes.sabor);
+                        addResto(item.selecoes.recheio);
+                        addResto(item.selecoes.adicional);
+                    }
+                    if(item.obs) msg += `   📝 *Obs:* ${item.obs}\n`;
+                });
 
-                const total = this.calcularTotal();
+                msg += `------------------------------\n`;
+                msg += `💰 *TOTAL: R$ ${totalGeral.toFixed(2)}*\n\n`;
+
+                msg += `📍 *ENTREGA:*\n`;
+                msg += `${rua}, Nº ${num}\n`;
+                msg += `${bairro}\n`;
+                if(refEnd) msg += `Ref: ${refEnd}\n\n`;
+
+                msg += `💳 *PAGAMENTO:* ${pag}\n`;
+                if(pag === 'Dinheiro') msg += `💱 Troco para: ${troco}`;
+
+                // Enviar para Firebase (Historico)
                 const pedidoObj = {
-                    cliente: nome, telefone: zap, produto: this.produtoAtual.nome, total: total,
+                    cliente: nome, telefone: zap, total: totalGeral,
                     data: new Date().toISOString(), status: 'pendente',
-                    detalhes: this.produtoAtual.selecoes, obs: obs
+                    endereco: { rua, num, bairro, ref: refEnd },
+                    pagamento: pag, troco: troco,
+                    itens: this.carrinho
                 };
-
+                
                 try {
                     await push(ref(db, `empresas/${this.empresaId}/pedidos`), pedidoObj);
                     
-                    let msg = `*PEDIDO AÇAÍ (${this.dadosEmpresa.nome_fantasia})* 💜\n`;
-                    msg += `👤 ${nome}\n🥣 *${this.produtoAtual.nome}*\n`;
+                    // Limpa carrinho
+                    localStorage.removeItem('meuCarrinhoAcai');
                     
-                    const listar = (obj, titulo) => {
-                        let txt = "";
-                        if(Object.keys(obj).length > 0) {
-                            txt += `\n*${titulo}*:\n`;
-                            for(let [k,v] of Object.entries(obj)) txt += `👉 ${v}x ${k}\n`;
-                        }
-                        return txt;
-                    };
-
-                    msg += listar(this.produtoAtual.selecoes.sabor, "Sabores");
-                    msg += listar(this.produtoAtual.selecoes.recheio, "Recheios");
-                    msg += listar(this.produtoAtual.selecoes.adicional, "Adicionais");
-                    
-                    if(obs) msg += `\n📝 Obs: ${obs}\n`;
-                    msg += `\n💰 *Total: R$ ${total.toFixed(2)}*`;
-
                     const telLoja = this.dadosEmpresa.telefone || ""; 
                     window.open(`https://wa.me/${telLoja}?text=${encodeURIComponent(msg)}`, '_blank');
                     
-                    setTimeout(() => location.reload(), 2000);
-
+                    setTimeout(() => location.reload(), 2000); // Recarrega para limpar tudo
+                    
                 } catch (err) {
                     console.error(err);
-                    alert("Erro ao enviar.");
+                    alert("Erro ao salvar pedido.");
                 }
             }
         }
