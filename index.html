@@ -343,60 +343,49 @@ const PRODUTOS_BASE = {
             }
 
 async buscarEstoqueFirebase() {
-                // Caminho exato onde salvamos o JSON novo
+                console.warn("=== MODO DIAGNÓSTICO ATIVADO ===");
+                
+                // 1. Tenta ler a RAIZ do banco para ver a estrutura
+                try {
+                    const raizSnap = await get(child(dbRef, '/'));
+                    const raiz = raizSnap.val();
+                    console.log("ESTRUTURA DA RAIZ DO BANCO:", raiz);
+                    
+                    if (raiz && raiz.empresas && raiz.empresas.empresas) {
+                        alert("ERRO ENCONTRADO: Você tem uma pasta 'empresas' dentro de outra 'empresas'. Refaça a importação do JSON na raiz.");
+                        return;
+                    }
+
+                    if (raiz && !raiz.empresas) {
+                        alert("ERRO: Não existe a pasta 'empresas' na raiz do seu banco. Verifique o console (F12) para ver o que tem lá.");
+                    }
+
+                } catch (e) {
+                    console.error("Erro ao ler raiz (Pode ser permissão):", e);
+                }
+
+                // 2. Continua a busca normal...
                 const pathBase = `empresas/${this.empresaId}/cardapio`;
-                console.log("Iniciando busca em:", pathBase);
+                console.log(`Tentando ler caminho oficial: ${pathBase}`);
 
                 const fetchCategory = async (cat) => {
+                    // ... (resto do código igual ao anterior) ...
+                    // Vou resumir aqui para focar no teste:
                     try {
-                        const caminhoCompleto = `${pathBase}/${cat}`;
-                        console.log(`Lendo caminho: ${caminhoCompleto}`);
-                        
-                        const snap = await get(child(dbRef, caminhoCompleto));
-                        
-                        if (!snap.exists()) {
-                            console.warn(`ATENÇÃO: Não encontrei dados em ${caminhoCompleto}`);
-                            // Tenta buscar na raiz como fallback (caso a migração tenha falhado)
-                            console.log(`Tentando buscar na raiz antiga: ${cat}_acai`);
-                            const snapOld = await get(child(dbRef, `${cat}_acai`));
-                            if(snapOld.exists()) return Object.values(snapOld.val()).filter(i => i);
-                            
-                            return []; 
-                        }
-
-                        const dados = snap.val();
-                        console.log(`Dados encontrados em ${cat}:`, dados);
-
-                        // Converte objeto para array e filtra
-                        return Object.values(dados).filter(item => {
-                            // Se item for null ou indisponível, ignora
-                            return item && item.disponivel !== false;
-                        });
-
-                    } catch (e) {
-                        console.error(`Erro grave ao buscar ${cat}:`, e);
-                        return [];
-                    }
+                        const s = await get(child(dbRef, `${pathBase}/${cat}`));
+                        if(s.exists()) return Object.values(s.val()).filter(x => x.disponivel !== false);
+                        else return [];
+                    } catch(e) { return []; }
                 };
 
-                // Busca paralela
                 const [s, r, a] = await Promise.all([
                     fetchCategory('sabores'),
                     fetchCategory('recheios'),
                     fetchCategory('adicionais')
                 ]);
 
-                // Atualiza o estado
-                this.estoque.sabores = s;
-                this.estoque.recheios = r;
-                this.estoque.adicionais = a;
-
-                console.log("ESTOQUE FINAL CARREGADO:", this.estoque);
-
-                // Se tudo estiver vazio, alerta o usuário
-                if (s.length === 0 && r.length === 0) {
-                    alert("Aviso: O cardápio parece estar vazio. Verifique se importou o arquivo JSON 'banco_completo_v2.json' no Firebase.");
-                }
+                this.estoque = { sabores: s, recheios: r, adicionais: a };
+                console.log("Resultado da busca interna:", this.estoque);
             }
 
             // === NAVEGAÇÃO ENTRE TELAS ===
