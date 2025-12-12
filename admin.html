@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Universo Açaí</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div id="login-screen">
+        <div class="login-box">
+            <div class="logo-area">
+                <i class="fas fa-shield-alt"></i> <span>ADMIN ACCESS</span>
+            </div>
+            <h2>AUTENTICAÇÃO</h2>
+            <form id="form-login">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="login-email" placeholder="E-mail Admin" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-key"></i>
+                    <input type="password" id="login-senha" placeholder="Senha Mestra" required>
+                </div>
+                <button type="submit" class="btn-cyber">ACESSAR SISTEMA</button>
+                <p style="margin-top:15px; font-size:12px; color:#666; cursor:pointer;" onclick="window.location.href='index.html'">Voltar para Loja</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" style="display: none;">
+        
+        <header class="main-header">
+            <div class="brand">
+                <i class="fas fa-terminal"></i> GESTOR <span style="color: var(--neon-blue);">2.0</span>
+            </div>
+            <button onclick="fazerLogout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> SAIR</button>
+        </header>
+
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="trocarAba('pedidos')"><i class="fas fa-receipt"></i> PEDIDOS</button>
+            <button class="nav-btn" onclick="trocarAba('financeiro')"><i class="fas fa-chart-line"></i> FINANCEIRO</button>
+            <button class="nav-btn" onclick="trocarAba('estoque')"><i class="fas fa-boxes"></i> ESTOQUE</button>
+        </div>
+
+        <section id="view-pedidos" class="view-section active">
+            <div class="toolbar">
+                <h3>PEDIDOS RECEBIDOS</h3>
+                <input type="date" id="filtro-data-pedidos" class="cyber-input">
+            </div>
+            <div id="lista-pedidos" class="grid-pedidos">
+                <p class="loading-text">Carregando dados...</p>
+            </div>
+        </section>
+
+        <section id="view-financeiro" class="view-section" style="display: none;">
+            <div class="toolbar">
+                <h3>MÉTRICAS & LUCROS</h3>
+                <input type="date" id="filtro-data-financeiro" class="cyber-input">
+            </div>
+            
+            <div class="kpi-container">
+                <div class="kpi-card blue">
+                    <small>Faturamento (DIA)</small>
+                    <strong id="fat-dia">R$ 0,00</strong>
+                </div>
+                <div class="kpi-card green">
+                    <small>Lucro Líq. (DIA)</small>
+                    <strong id="lucro-dia">R$ 0,00</strong>
+                </div>
+                <div class="kpi-card purple">
+                    <small>Faturamento (MÊS)</small>
+                    <strong id="fat-mes">R$ 0,00</strong>
+                </div>
+                <div class="kpi-card red">
+                    <small>Lucro Líq. (MÊS)</small>
+                    <strong id="lucro-mes">R$ 0,00</strong>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-estoque" class="view-section" style="display: none;">
+            <div class="toolbar">
+                <h3>CONTROLE DE CARDÁPIO</h3>
+                <p style="font-size: 12px; color: #888;">Desative itens para removê-los do aplicativo do cliente.</p>
+            </div>
+
+            <div class="estoque-cols">
+                <div class="col-estoque">
+                    <h4><i class="fas fa-ice-cream"></i> Sabores</h4>
+                    <div id="estoque-sabores" class="lista-toggle"></div>
+                </div>
+                <div class="col-estoque">
+                    <h4><i class="fas fa-candy-cane"></i> Recheios</h4>
+                    <div id="estoque-recheios" class="lista-toggle"></div>
+                </div>
+                <div class="col-estoque">
+                    <h4><i class="fas fa-plus-circle"></i> Adicionais</h4>
+                    <div id="estoque-adicionais" class="lista-toggle"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

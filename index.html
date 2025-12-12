@@ -395,12 +395,16 @@
 
             async carregarOpcoesGlobais() {
                 const dbRef = ref(db);
-                const fetchList = async (path) => {
-                    const snap = await get(child(dbRef, path));
-                    // DEBUG: Verifique se está chegando dados
-                    if(!snap.exists()) console.warn(`Atenção: Caminho ${path} vazio no Firebase.`);
-                    return snap.exists() ? Object.values(snap.val()) : [];
-                };
+const fetchList = async (path) => {
+    const snap = await get(child(dbRef, path));
+    if(!snap.exists()) return []; // Se não existir, retorna lista vazia
+    
+    const lista = Object.values(snap.val());
+    
+    // O FILTRO MÁGICO ACONTECE AQUI:
+    // Só retorna o item se "disponivel" for diferente de false
+    return lista.filter(item => item.disponivel !== false);
+};
                 
                 this.saboresDB = await fetchList('sabores_acai');
                 this.recheiosDB = await fetchList('recheios_acai');
@@ -715,5 +719,15 @@
         document.addEventListener('DOMContentLoaded', () => app.init());
 
     </script>
+
+    <footer style="text-align: center; padding: 20px; color: #ccc; font-size: 12px; margin-top: 50px;">
+    <p>&copy; 2024 Universo Açaí. Todos os direitos reservados.</p>
+    
+    <div style="opacity: 0.1; margin-top: 10px; cursor: default;">
+        <span>v.1.0</span>
+        <i class="fas fa-lock" onclick="window.location.href='admin.html'" style="cursor: pointer; margin-left: 5px;"></i>
+    </div>
+</footer>
+
 </body>
 </html>
