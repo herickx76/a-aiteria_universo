@@ -50,7 +50,7 @@
         .slider-container.show-step-1 #step-2-customization, .slider-container.show-step-1 #step-3-checkout, .slider-container.show-step-1 #step-4-success { height: 0; overflow: hidden; padding: 0; }
         .slider-container.show-step-2 #step-1-selection, .slider-container.show-step-2 #step-3-checkout, .slider-container.show-step-2 #step-4-success { height: 0; overflow: hidden; padding: 0; }
         .slider-container.show-step-3 #step-1-selection, .slider-container.show-step-3 #step-2-customization, .slider-container.show-step-3 #step-4-success { height: 0; overflow: hidden; padding: 0; }
-        .slider-container.show-step-4 #step-1-selection, .slider-container.show-step-4 #step-2-customization, .slider-container.show-step-4 #step-3-checkout { height: 0; overflow: hidden; padding: 0; }
+        .slider-container.show-step-4 #step-1-selection, .slider-container.show-step-4 #step-2-customization, .slider-container.show-step-3 #step-3-checkout { height: 0; overflow: hidden; padding: 0; }
 
         /* SEÇÕES E GRID */
         .section-block { margin-bottom: 30px; }
@@ -475,12 +475,16 @@
                 const displayStyle = configuravel ? 'block' : 'none';
                 document.getElementById('card-sabores').style.display = displayStyle;
                 document.getElementById('card-recheios').style.display = displayStyle;
+                document.getElementById('card-adicionais').style.display = displayStyle; // MODIFICAÇÃO APLICADA AQUI
 
                 if (configuravel) {
                     this.renderizarListaOpcoes('sabor', this.saboresDB, 'lista-sabores');
                     this.renderizarListaOpcoes('recheio', this.recheiosDB, 'lista-recheios');
+                    this.renderizarListaOpcoes('adicional', this.adicionaisDB, 'lista-adicionais'); // Agora só renderiza se for configurável
+                } else {
+                    // Limpa a lista de adicionais caso não seja configurável para evitar renderização fantasma
+                    document.getElementById('lista-adicionais').innerHTML = ""; 
                 }
-                this.renderizarListaOpcoes('adicional', this.adicionaisDB, 'lista-adicionais');
 
                 document.querySelector('.slider-container').className = 'slider-container show-step-2';
                 document.getElementById('barra-ver-carrinho').classList.add('hidden');
