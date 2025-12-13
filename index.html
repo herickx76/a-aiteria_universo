@@ -38,39 +38,22 @@
         #loading-text { color: white; font-weight: 500; letter-spacing: 1px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* TOAST NOTIFICATION (NOVO) */
+        /* TOAST NOTIFICATION */
         #toast-box {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 50px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            font-size: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
+            visibility: hidden; min-width: 250px; margin-left: -125px;
+            background-color: #333; color: #fff; text-align: center; border-radius: 50px;
+            padding: 16px; position: fixed; z-index: 1000; left: 50%; bottom: 30px;
+            font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            opacity: 0; transition: opacity 0.3s, bottom 0.3s;
         }
-        #toast-box.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
+        #toast-box.show { visibility: visible; opacity: 1; bottom: 50px; }
 
         /* HEADER */
         header {
-            background: var(--primary);
-            padding: 15px 20px; 
+            background: var(--primary); padding: 15px 20px; 
             position: sticky; top: 0; z-index: 100;
             box-shadow: 0 4px 15px rgba(75, 0, 130, 0.2);
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
             color: var(--white);
         }
         .profile-container { display: flex; align-items: center; gap: 15px; }
@@ -152,18 +135,25 @@
             padding: 12px 0; border-bottom: 1px solid #f9f9f9; transition: 0.2s;
         }
         .opcao-item:last-child { border-bottom: none; }
+        
+        /* ITEM DESABILITADO (QUANDO ATINGE O LIMITE) */
+        .opcao-item.disabled-opt { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
+
         .opcao-info { display: flex; align-items: center; gap: 12px; }
         .opcao-img { 
             width: 50px; height: 50px; border-radius: 12px; object-fit: cover; 
             background: #f0f0f0; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
-        /* Checkbox customizado */
+        /* CHECKBOX CUSTOMIZADO - AGORA ROXO */
         .chk-container { position: relative; width: 24px; height: 24px; }
         .chk-input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; z-index: 2; }
         .chk-visual {
-            width: 100%; height: 100%; border: 2px solid #ddd; border-radius: 50%;
+            width: 100%; height: 100%; 
+            border: 2px solid var(--primary); /* Alterado para ROXO */
+            border-radius: 50%;
             display: flex; align-items: center; justify-content: center; transition: 0.2s;
+            background: white;
         }
         .chk-input:checked + .chk-visual { border-color: var(--primary); background: var(--primary); transform: scale(1.1); }
         .chk-visual::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 12px; display: none; }
@@ -174,10 +164,15 @@
         .cart-item-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 5px; }
         .cart-item-desc { font-size: 0.9rem; color: #666; line-height: 1.4; }
         .btn-remove { position: absolute; top: 15px; right: 15px; color: #ff4444; background: rgba(255, 68, 68, 0.1); width: 30px; height: 30px; border-radius: 50%; border: none; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        /* FORMULÁRIO */
         .form-checkout input, .form-checkout select {
             width: 100%; padding: 15px; margin-bottom: 12px; border: 1px solid #eee; border-radius: 12px; outline: none; background: #f9f9f9; font-size: 1rem;
         }
-        .form-checkout input:focus { border-color: var(--primary); background: white; }
+        .form-checkout input:focus, .form-checkout select:focus { border-color: var(--primary); background: white; }
+        
+        /* ESTILO PARA QUANDO HÁ ERRO NO CAMPO */
+        .input-error { border: 1px solid #ff4444 !important; background: #fff0f0 !important; }
 
         /* RODAPÉ DE AÇÃO */
         .footer-action {
@@ -265,12 +260,12 @@
                 </div>
 
                 <div id="area-recheios" class="grupo-opcoes">
-                    <div class="grupo-titulo">Recheios Grátis <span class="limit-badge">Até 3</span></div>
+                    <div class="grupo-titulo">Recheios Grátis <span class="limit-badge">Até 7</span></div>
                     <div id="lista-recheios"></div>
                 </div>
 
                 <div id="area-adicionais" class="grupo-opcoes">
-                    <div class="grupo-titulo">Adicionais Pagos <span class="limit-badge">Opcional</span></div>
+                    <div class="grupo-titulo">Adicionais Pagos <span class="limit-badge">Ilimitado</span></div>
                     <div id="lista-adicionais"></div>
                 </div>
             </div>
@@ -283,7 +278,7 @@
                     <div class="grupo-titulo" style="border:none; padding:0 0 10px 0;">Entrega</div>
                     <div class="form-checkout">
                         <input type="text" id="cli-nome" placeholder="Seu Nome">
-                        <input type="tel" id="cli-zap" placeholder="Seu WhatsApp">
+                        <input type="tel" id="cli-zap" placeholder="Seu WhatsApp (apenas números)" oninput="this.value = this.value.replace(/\D/g, '')" maxlength="15">
                         <input type="text" id="cli-rua" placeholder="Rua e Número">
                         <input type="text" id="cli-bairro" placeholder="Bairro">
                         <input type="text" id="cli-ref" placeholder="Ponto de Referência">
@@ -294,6 +289,7 @@
                     <div class="grupo-titulo" style="border:none; padding:0 0 10px 0;">Pagamento</div>
                     <div class="form-checkout">
                         <select id="cli-pagamento" onchange="verificarTroco(this.value)">
+                            <option value="" selected disabled>Selecione o pagamento...</option>
                             <option value="Pix">Pix (Chave CPF/Email)</option>
                             <option value="Cartão">Cartão (Maquininha)</option>
                             <option value="Dinheiro">Dinheiro</option>
@@ -327,7 +323,7 @@
 
     <div class="admin-footer">
         <p>&copy; 2025 Universo do Açaí</p>
-        <span class="admin-lock" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> v2.2</span>
+        <span class="admin-lock" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> v2.3</span>
     </div>
 
     <script type="module">
@@ -352,7 +348,6 @@
         const db = getDatabase(appFirebase);
         const dbRef = ref(db);
 
-        // Produtos Fixos
         const PRODUTOS = {
             isopor: [
                 { id: 'p1', nome: '300mL', preco: 12.00, img: 'imagens_acai/pote1.jpeg' },
@@ -421,18 +416,16 @@
                 document.getElementById('slider').style.transform = `translateX(-${index * 25}%)`;
                 
                 const footer = document.getElementById('footer-bar');
-                // Footer só aparece na tela 1 (montagem) e 2 (carrinho)
                 if(index === 0 || index === 3) footer.classList.add('hidden');
                 else footer.classList.remove('hidden');
-
-                // Botão flutuante só aparece na tela 0 se tiver itens
+                
                 this.atualizarBotaoFlutuante();
 
                 const btnAvancar = document.getElementById('btn-avancar');
                 if(index === 1) {
                     btnAvancar.innerHTML = `<span>Adicionar</span> <i class="fas fa-plus"></i>`;
                     btnAvancar.onclick = () => this.addCarrinho();
-                    this.calcTotalMontagem();
+                    this.calcTotalMontagem(); // Recalcula pra validar limites na abertura
                 } else if(index === 2) {
                     btnAvancar.innerHTML = `<span>Enviar Pedido</span> <i class="fab fa-whatsapp"></i>`;
                     btnAvancar.onclick = () => this.enviarPedido();
@@ -444,7 +437,6 @@
             avancarTela() { if(this.telaAtual < 3) this.irParaTela(this.telaAtual + 1); }
             voltarTela() { if(this.telaAtual > 0) this.irParaTela(this.telaAtual - 1); }
 
-            // CORREÇÃO AQUI NA ÁGUA/VITAMINA
             abrirMontagem(id, nome, preco) {
                 if(nome.includes("Água") || nome.includes("Vitamina")) {
                     this.carrinho.push({ produto: nome, total: preco, sabores:[], recheios:[], adicionais:[] });
@@ -457,17 +449,23 @@
                 this.produtoEmMontagem = { id, nome, precoBase: preco };
                 document.getElementById('nome-produto-selecionado').innerText = nome;
                 
-                this.renderOpcoes('lista-sabores', this.estoque.sabores, 'sabor');
-                this.renderOpcoes('lista-recheios', this.estoque.recheios, 'recheio');
-                this.renderOpcoes('lista-adicionais', this.estoque.adicionais, 'add', true);
+                // PASSANDO OS LIMITES AQUI: Sabores(2), Recheios(7), Adicionais(Infinity)
+                this.renderOpcoes('lista-sabores', this.estoque.sabores, 'sabor', false, 2);
+                this.renderOpcoes('lista-recheios', this.estoque.recheios, 'recheio', false, 7);
+                this.renderOpcoes('lista-adicionais', this.estoque.adicionais, 'add', true, Infinity);
                 
                 this.irParaTela(1);
             }
 
-            renderOpcoes(divId, lista, tipo, comPreco=false) {
+            // FUNÇÃO ATUALIZADA COM LÓGICA DE LIMITE
+            renderOpcoes(divId, lista, tipo, comPreco=false, maxLimit=Infinity) {
                 const div = document.getElementById(divId);
                 div.innerHTML = '';
                 if(!lista.length) { div.innerHTML = '<p style="color:#999; padding:10px;">Indisponível no momento.</p>'; return; }
+
+                // Atributo data-limit no container pai para controle
+                div.setAttribute('data-limit-val', maxLimit);
+                div.setAttribute('data-type-group', tipo);
 
                 lista.forEach((item, idx) => {
                     const uid = `${tipo}-${idx}`;
@@ -475,7 +473,7 @@
                     const precoTxt = comPreco ? `<span style="color:var(--primary); font-weight:bold;">+ R$ ${item.preco.toFixed(2)}</span>` : '';
 
                     div.innerHTML += `
-                        <div class="opcao-item">
+                        <div class="opcao-item" id="row-${uid}">
                             <div class="opcao-info">
                                 <label for="${uid}" class="chk-container">
                                     <input type="checkbox" id="${uid}" class="chk-input"
@@ -496,10 +494,41 @@
 
             calcTotalMontagem() {
                 if(this.telaAtual !== 1) return;
+                
+                // 1. Calcular total financeiro
                 let adds = 0;
                 document.querySelectorAll('input[data-tipo="add"]:checked').forEach(el => adds += parseFloat(el.dataset.preco));
                 const total = this.produtoEmMontagem.precoBase + adds;
                 document.getElementById('total-display').innerText = `R$ ${total.toFixed(2)}`;
+
+                // 2. Verificar Limites (Sabores e Recheios)
+                this.verificarLimiteGrupo('lista-sabores');
+                this.verificarLimiteGrupo('lista-recheios');
+            }
+
+            verificarLimiteGrupo(divId) {
+                const div = document.getElementById(divId);
+                if(!div) return;
+                const limit = parseFloat(div.getAttribute('data-limit-val'));
+                const tipo = div.getAttribute('data-type-group');
+                
+                if(!limit || limit === Infinity) return;
+
+                const inputs = div.querySelectorAll(`input[data-tipo="${tipo}"]`);
+                const marcados = Array.from(inputs).filter(i => i.checked).length;
+
+                inputs.forEach(input => {
+                    const row = document.getElementById(`row-${input.id}`);
+                    if(!input.checked) {
+                        if(marcados >= limit) {
+                            input.disabled = true;
+                            if(row) row.classList.add('disabled-opt');
+                        } else {
+                            input.disabled = false;
+                            if(row) row.classList.remove('disabled-opt');
+                        }
+                    }
+                });
             }
 
             addCarrinho() {
@@ -569,10 +598,27 @@
             }
 
             async enviarPedido() {
-                const nome = document.getElementById('cli-nome').value;
-                const zap = document.getElementById('cli-zap').value;
-                const rua = document.getElementById('cli-rua').value;
-                if(!nome || !zap || !rua) { alert("Preencha Nome, WhatsApp e Endereço!"); return; }
+                const nome = document.getElementById('cli-nome').value.trim();
+                const zap = document.getElementById('cli-zap').value.trim();
+                const rua = document.getElementById('cli-rua').value.trim();
+                const pagamento = document.getElementById('cli-pagamento').value;
+
+                // VALIDAÇÕES RIGOROSAS
+                let erros = [];
+                if(nome.length < 2) erros.push("Preencha seu nome");
+                if(zap.length < 8) erros.push("WhatsApp inválido (apenas números)");
+                if(rua.length < 5) erros.push("Endereço muito curto");
+                if(!pagamento || pagamento === "") erros.push("Selecione a forma de pagamento");
+
+                if(erros.length > 0) {
+                    alert("Atenção:\n- " + erros.join("\n- "));
+                    // Destacar campos com erro (exemplo simples para pagamento)
+                    if(!pagamento) document.getElementById('cli-pagamento').classList.add('input-error');
+                    return;
+                }
+
+                // Remove erro visual se tiver
+                document.getElementById('cli-pagamento').classList.remove('input-error');
 
                 document.getElementById('loading-text').innerText = "Enviando...";
                 document.getElementById('loading-screen').style.display = 'flex';
@@ -584,7 +630,7 @@
                     data_hora: new Date().toLocaleString('pt-BR'),
                     cliente: { nome, whatsapp: zap },
                     endereco: { rua, bairro: document.getElementById('cli-bairro').value, ref: document.getElementById('cli-ref').value },
-                    pagamento: { metodo: document.getElementById('cli-pagamento').value, troco: document.getElementById('cli-troco').value },
+                    pagamento: { metodo: pagamento, troco: document.getElementById('cli-troco').value },
                     itens: this.carrinho,
                     total_pedido: total.toFixed(2),
                     status: 'pendente'
@@ -623,7 +669,11 @@
         }
 
         window.verificarTroco = (val) => {
-            document.getElementById('cli-troco').classList.toggle('hidden', val !== 'Dinheiro');
+            const trocoInput = document.getElementById('cli-troco');
+            const select = document.getElementById('cli-pagamento');
+            select.classList.remove('input-error'); // Limpa erro ao selecionar
+            
+            trocoInput.classList.toggle('hidden', val !== 'Dinheiro');
         };
 
         const app = new AppController();
