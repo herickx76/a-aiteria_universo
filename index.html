@@ -205,6 +205,80 @@
         .admin-footer { text-align: center; padding: 30px; color: #ccc; font-size: 12px; margin-top: 50px; }
         .admin-lock { opacity: 0.1; cursor: pointer; }
 
+        /* ================= RESPONSIVIDADE PARA PC ================= */
+@media (min-width: 768px) {
+    /* 1. Fundo do site e centralização */
+    body {
+        background-color: #2e0052; /* Fundo roxo escuro bonito fora do app */
+        display: flex;
+        justify-content: center;
+        overflow: hidden; /* Remove rolagem dupla */
+    }
+
+    /* 2. Cria a "caixa" do aplicativo (simula um celular) */
+    #app-container {
+        max-width: 450px; /* Largura máxima ideal */
+        width: 100%;
+        height: calc(100vh - 100px); /* Altura ajustada para o header */
+        margin-top: 100px; /* Espaço para o header */
+        background: var(--bg);
+        box-shadow: 0 0 40px rgba(0,0,0,0.5); /* Sombra para destacar */
+        position: relative;
+    }
+
+    /* 3. Ajusta o Header para ficar fixo e centralizado */
+    header {
+        position: fixed;
+        width: 100%;
+        max-width: 450px;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 0 0 25px 25px;
+        z-index: 999;
+    }
+
+    /* 4. Ajusta o Rodapé/Botões de ação para ficarem fixos e centralizados */
+    .footer-action {
+        width: 100%;
+        max-width: 450px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 25px 25px 0 0;
+    }
+
+    /* 5. Ajusta as imagens para ficarem proporcionais */
+    .card-produto img {
+        height: 150px; /* Aumenta um pouco a altura */
+        object-fit: cover; /* Garante que não estique/distorça */
+    }
+
+    /* 6. Ajusta o botão flutuante do carrinho */
+    #floating-cart {
+        left: 50% !important;
+        margin-left: 100px; /* Posiciona relativo ao centro */
+        right: auto !important;
+    }
+
+    /* 7. Barra de rolagem mais bonita no PC */
+    .step-screen::-webkit-scrollbar { width: 6px; }
+    .step-screen::-webkit-scrollbar-track { background: #f1f1f1; }
+    .step-screen::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+    
+    /* 8. Centraliza notificações */
+    #toast-box {
+        left: 50%;
+        transform: translateX(-50%);
+        margin-left: 0;
+    }
+    
+    #loading-screen {
+        max-width: 450px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
     </style>
 </head>
 <body>
