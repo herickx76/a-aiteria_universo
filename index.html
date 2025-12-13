@@ -21,33 +21,11 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        /* CORREÇÃO PARA PC: Centraliza o app e limita a largura */
-        body { 
-            background: #e0e0e0; /* Fundo cinza para quem ver no PC */
-            color: var(--text); 
-            height: 100vh; 
-            overflow: hidden; /* Remove rolagem dupla */
-            display: flex;
-            justify-content: center;
-        }
-
-        /* O "CELULAR" VIRTUAL */
-        #mobile-wrapper {
-            width: 100%;
-            max-width: 480px; /* Limite de largura para não esticar no PC */
-            height: 100%;
-            background: var(--bg);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Sombra para destacar no PC */
-            overflow: hidden;
-        }
+        body { background: var(--bg); color: var(--text); padding-bottom: 90px; overflow-x: hidden; height: 100vh; position: relative; }
 
         /* LOADING SCREEN */
         #loading-screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--primary); z-index: 9999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.5s;
@@ -68,7 +46,7 @@
             font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             opacity: 0; transition: opacity 0.3s, bottom 0.3s;
         }
-        #toast-box.show { visibility: visible; opacity: 1; bottom: 80px; } /* Ajustei a altura */
+        #toast-box.show { visibility: visible; opacity: 1; bottom: 50px; }
 
         /* HEADER */
         header {
@@ -77,7 +55,6 @@
             box-shadow: 0 4px 15px rgba(75, 0, 130, 0.2);
             border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
             color: var(--white);
-            flex-shrink: 0; /* Impede que o header encolha */
         }
         .profile-container { display: flex; align-items: center; gap: 15px; }
         .profile-logo {
@@ -90,10 +67,10 @@
             display: flex; align-items: center; gap: 8px;
         }
         .insta-icon {
-            background: white; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            background: white; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             font-size: 1.1rem;
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .status-badge {
             display: flex; align-items: center; gap: 6px; font-size: 0.85rem;
@@ -108,7 +85,6 @@
         #app-container {
             width: 100%; height: 100%; padding-top: 20px;
             overflow: hidden; position: relative;
-            flex-grow: 1; /* Ocupa o espaço restante */
         }
         .slider-wrapper {
             display: flex; width: 400%; height: 100%;
@@ -160,7 +136,7 @@
         }
         .opcao-item:last-child { border-bottom: none; }
         
-        /* ITEM DESABILITADO */
+        /* ITEM DESABILITADO (QUANDO ATINGE O LIMITE) */
         .opcao-item.disabled-opt { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
 
         .opcao-info { display: flex; align-items: center; gap: 12px; }
@@ -169,12 +145,12 @@
             background: #f0f0f0; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
-        /* CHECKBOX CUSTOMIZADO ROXO */
+        /* CHECKBOX CUSTOMIZADO - AGORA ROXO */
         .chk-container { position: relative; width: 24px; height: 24px; }
         .chk-input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; z-index: 2; }
         .chk-visual {
             width: 100%; height: 100%; 
-            border: 2px solid var(--primary); 
+            border: 2px solid var(--primary); /* Alterado para ROXO */
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center; transition: 0.2s;
             background: white;
@@ -194,18 +170,19 @@
             width: 100%; padding: 15px; margin-bottom: 12px; border: 1px solid #eee; border-radius: 12px; outline: none; background: #f9f9f9; font-size: 1rem;
         }
         .form-checkout input:focus, .form-checkout select:focus { border-color: var(--primary); background: white; }
+        
+        /* ESTILO PARA QUANDO HÁ ERRO NO CAMPO */
         .input-error { border: 1px solid #ff4444 !important; background: #fff0f0 !important; }
 
-        /* RODAPÉ DE AÇÃO (FIXO NO ROXO) */
+        /* RODAPÉ DE AÇÃO */
         .footer-action {
-            position: absolute; /* Mudado para absolute dentro do wrapper */
-            bottom: 0; left: 0; width: 100%;
-            background: var(--primary) !important; /* FORÇADO ROXO */
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--primary);
             padding: 15px 20px;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
             display: flex; justify-content: space-between; align-items: center; z-index: 200;
             border-top-left-radius: 20px; border-top-right-radius: 20px;
-            color: white !important; /* FORÇADO BRANCO */
+            color: white;
         }
         .footer-total { font-size: 0.9rem; color: rgba(255,255,255,0.7); display: flex; flex-direction: column; }
         .total-value { color: var(--accent); font-weight: 800; font-size: 1.4rem; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
@@ -232,126 +209,124 @@
 </head>
 <body>
 
-    <div id="mobile-wrapper">
+    <div id="toast-box"><i class="fas fa-check-circle"></i> Item adicionado ao carrinho!</div>
 
-        <div id="toast-box"><i class="fas fa-check-circle"></i> Item adicionado ao carrinho!</div>
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div id="loading-text">Carregando Loja...</div>
+    </div>
 
-        <div id="loading-screen">
-            <div class="spinner"></div>
-            <div id="loading-text">Carregando Loja...</div>
-        </div>
-
-        <header>
-            <div class="profile-container">
-                <img src="imagens_acai/logo-universo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1625/1625048.png'" alt="Logo" class="profile-logo">
-                <div class="profile-info">
-                    <div class="profile-handle">
-                        <i class="fab fa-instagram insta-icon"></i> @universodoacai
-                    </div>
-                    <div class="status-badge">
-                        <span class="status-dot"></span> <span id="txt-status">Aberto agora</span>
-                    </div>
+    <header>
+        <div class="profile-container">
+            <img src="imagens_acai/logo-universo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1625/1625048.png'" alt="Logo" class="profile-logo">
+            <div class="profile-info">
+                <div class="profile-handle">
+                    <i class="fab fa-instagram insta-icon"></i> @universodoacai
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span> <span id="txt-status">Aberto agora</span>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <div id="app-container">
-            <div class="slider-wrapper" id="slider">
+    <div id="app-container">
+        <div class="slider-wrapper" id="slider">
+            
+            <div class="step-screen" id="step-1">
+                <div class="section-title">Açaí no Isopor</div>
+                <div class="grid-produtos" id="grid-isopor"></div>
+
+                <div class="section-title">Açaí no Copo</div>
+                <div class="grid-produtos" id="grid-copo"></div>
+
+                <div class="section-title">Bebidas & Outros</div>
+                <div class="grid-produtos" id="grid-bebidas"></div>
                 
-                <div class="step-screen" id="step-1">
-                    <div class="section-title">Açaí no Isopor</div>
-                    <div class="grid-produtos" id="grid-isopor"></div>
+                <button id="floating-cart" class="btn-action hidden" style="position: fixed; bottom: 20px; right: 20px; z-index: 90;" onclick="app.irParaTela(2)">
+                    <i class="fas fa-shopping-cart"></i> Ver Carrinho
+                </button>
+            </div>
 
-                    <div class="section-title">Açaí no Copo</div>
-                    <div class="grid-produtos" id="grid-copo"></div>
-
-                    <div class="section-title">Bebidas & Outros</div>
-                    <div class="grid-produtos" id="grid-bebidas"></div>
-                    
-                    <button id="floating-cart" class="btn-action hidden" style="position: fixed; bottom: 20px; right: 20px; z-index: 90;" onclick="app.irParaTela(2)">
-                        <i class="fas fa-shopping-cart"></i> Ver Carrinho
-                    </button>
+            <div class="step-screen" id="step-2">
+                <div class="montagem-header">
+                    <h2 id="nome-produto-selecionado">Montando</h2>
+                    <p style="color: #888;">Escolha seus ingredientes</p>
                 </div>
 
-                <div class="step-screen" id="step-2">
-                    <div class="montagem-header">
-                        <h2 id="nome-produto-selecionado">Montando</h2>
-                        <p style="color: #888;">Escolha seus ingredientes</p>
-                    </div>
-
-                    <div id="area-sabores" class="grupo-opcoes">
-                        <div class="grupo-titulo">Sabores <span class="limit-badge">Até 2</span></div>
-                        <div id="lista-sabores"></div>
-                    </div>
-
-                    <div id="area-recheios" class="grupo-opcoes">
-                        <div class="grupo-titulo">Recheios Grátis <span class="limit-badge">Até 7</span></div>
-                        <div id="lista-recheios"></div>
-                    </div>
-
-                    <div id="area-adicionais" class="grupo-opcoes">
-                        <div class="grupo-titulo">Adicionais Pagos <span class="limit-badge">Ilimitado</span></div>
-                        <div id="lista-adicionais"></div>
-                    </div>
+                <div id="area-sabores" class="grupo-opcoes">
+                    <div class="grupo-titulo">Sabores <span class="limit-badge">Até 2</span></div>
+                    <div id="lista-sabores"></div>
                 </div>
 
-                <div class="step-screen" id="step-3">
-                    <div class="section-title"><i class="fas fa-receipt"></i> Resumo do Pedido</div>
-                    <div id="lista-carrinho-final"></div>
-
-                    <div class="grupo-opcoes" style="margin-top: 20px; padding-top:20px; padding-bottom: 20px;">
-                        <div class="grupo-titulo" style="border:none; padding:0 0 10px 0;">Entrega</div>
-                        <div class="form-checkout">
-                            <input type="text" id="cli-nome" placeholder="Seu Nome">
-                            <input type="tel" id="cli-zap" placeholder="Seu WhatsApp (apenas números)" oninput="this.value = this.value.replace(/\D/g, '')" maxlength="15">
-                            <input type="text" id="cli-rua" placeholder="Rua e Número">
-                            <input type="text" id="cli-bairro" placeholder="Bairro">
-                            <input type="text" id="cli-ref" placeholder="Ponto de Referência">
-                        </div>
-                    </div>
-
-                    <div class="grupo-opcoes" style="padding-top:20px; padding-bottom: 20px;">
-                        <div class="grupo-titulo" style="border:none; padding:0 0 10px 0;">Pagamento</div>
-                        <div class="form-checkout">
-                            <select id="cli-pagamento" onchange="verificarTroco(this.value)">
-                                <option value="" selected disabled>Selecione o pagamento...</option>
-                                <option value="Pix">Pix (Chave CPF/Email)</option>
-                                <option value="Cartão">Cartão (Maquininha)</option>
-                                <option value="Dinheiro">Dinheiro</option>
-                            </select>
-                            <input type="text" id="cli-troco" class="hidden" placeholder="Troco para quanto?">
-                        </div>
-                    </div>
+                <div id="area-recheios" class="grupo-opcoes">
+                    <div class="grupo-titulo">Recheios Grátis <span class="limit-badge">Até 7</span></div>
+                    <div id="lista-recheios"></div>
                 </div>
 
-                <div class="step-screen" id="step-4" style="text-align: center; padding-top: 80px;">
-                    <i class="fas fa-check-circle" style="font-size: 5rem; color: var(--accent); margin-bottom: 20px;"></i>
-                    <h2 style="color: var(--primary);">Pedido Enviado!</h2>
-                    <p style="color: #666;">Aguarde a confirmação no WhatsApp.</p>
-                    <button class="btn-action" style="width:auto; margin: 30px auto; background: var(--primary); color: white;" onclick="location.reload()">Novo Pedido</button>
+                <div id="area-adicionais" class="grupo-opcoes">
+                    <div class="grupo-titulo">Adicionais Pagos <span class="limit-badge">Ilimitado</span></div>
+                    <div id="lista-adicionais"></div>
                 </div>
             </div>
-        </div>
 
-        <div id="footer-bar" class="footer-action hidden">
-            <div style="display:flex; align-items:center;">
-                <button id="btn-voltar" class="btn-back" onclick="app.voltarTela()"><i class="fas fa-chevron-left"></i></button>
-                <div class="footer-total">
-                    <span>Total estimado</span>
-                    <span class="total-value" id="total-display">R$ 0,00</span>
+            <div class="step-screen" id="step-3">
+                <div class="section-title"><i class="fas fa-receipt"></i> Resumo do Pedido</div>
+                <div id="lista-carrinho-final"></div>
+
+                <div class="grupo-opcoes" style="margin-top: 20px; padding-top:20px; padding-bottom: 20px;">
+                    <div class="grupo-titulo" style="border:none; padding:0 0 10px 0;">Entrega</div>
+                    <div class="form-checkout">
+                        <input type="text" id="cli-nome" placeholder="Seu Nome">
+                        <input type="tel" id="cli-zap" placeholder="Seu WhatsApp (apenas números)" oninput="this.value = this.value.replace(/\D/g, '')" maxlength="15">
+                        <input type="text" id="cli-rua" placeholder="Rua e Número">
+                        <input type="text" id="cli-bairro" placeholder="Bairro">
+                        <input type="text" id="cli-ref" placeholder="Ponto de Referência">
+                    </div>
+                </div>
+
+                <div class="grupo-opcoes" style="padding-top:20px; padding-bottom: 20px;">
+                    <div class="grupo-titulo" style="border:none; padding:0 0 10px 0;">Pagamento</div>
+                    <div class="form-checkout">
+                        <select id="cli-pagamento" onchange="verificarTroco(this.value)">
+                            <option value="" selected disabled>Selecione o pagamento...</option>
+                            <option value="Pix">Pix (Chave CPF/Email)</option>
+                            <option value="Cartão">Cartão (Maquininha)</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                        </select>
+                        <input type="text" id="cli-troco" class="hidden" placeholder="Troco para quanto?">
+                    </div>
                 </div>
             </div>
-            <button id="btn-avancar" class="btn-action" onclick="app.avancarTela()">
-                <span>Avançar</span> <i class="fas fa-arrow-right"></i>
-            </button>
-        </div>
 
-        <div class="admin-footer">
-            <p>&copy; 2025 Universo do Açaí</p>
-            <span class="admin-lock" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> v2.4</span>
+            <div class="step-screen" id="step-4" style="text-align: center; padding-top: 80px;">
+                <i class="fas fa-check-circle" style="font-size: 5rem; color: var(--accent); margin-bottom: 20px;"></i>
+                <h2 style="color: var(--primary);">Pedido Enviado!</h2>
+                <p style="color: #666;">Aguarde a confirmação no WhatsApp.</p>
+                <button class="btn-action" style="width:auto; margin: 30px auto; background: var(--primary); color: white;" onclick="location.reload()">Novo Pedido</button>
+            </div>
         </div>
+    </div>
 
-    </div> <script type="module">
+    <div id="footer-bar" class="footer-action hidden">
+        <div style="display:flex; align-items:center;">
+            <button id="btn-voltar" class="btn-back" onclick="app.voltarTela()"><i class="fas fa-chevron-left"></i></button>
+            <div class="footer-total">
+                <span>Total estimado</span>
+                <span class="total-value" id="total-display">R$ 0,00</span>
+            </div>
+        </div>
+        <button id="btn-avancar" class="btn-action" onclick="app.avancarTela()">
+            <span>Avançar</span> <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <div class="admin-footer">
+        <p>&copy; 2025 Universo do Açaí</p>
+        <span class="admin-lock" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> v2.3</span>
+    </div>
+
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, get, child, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
@@ -450,7 +425,7 @@
                 if(index === 1) {
                     btnAvancar.innerHTML = `<span>Adicionar</span> <i class="fas fa-plus"></i>`;
                     btnAvancar.onclick = () => this.addCarrinho();
-                    this.calcTotalMontagem(); 
+                    this.calcTotalMontagem(); // Recalcula pra validar limites na abertura
                 } else if(index === 2) {
                     btnAvancar.innerHTML = `<span>Enviar Pedido</span> <i class="fab fa-whatsapp"></i>`;
                     btnAvancar.onclick = () => this.enviarPedido();
@@ -474,6 +449,7 @@
                 this.produtoEmMontagem = { id, nome, precoBase: preco };
                 document.getElementById('nome-produto-selecionado').innerText = nome;
                 
+                // PASSANDO OS LIMITES AQUI: Sabores(2), Recheios(7), Adicionais(Infinity)
                 this.renderOpcoes('lista-sabores', this.estoque.sabores, 'sabor', false, 2);
                 this.renderOpcoes('lista-recheios', this.estoque.recheios, 'recheio', false, 7);
                 this.renderOpcoes('lista-adicionais', this.estoque.adicionais, 'add', true, Infinity);
@@ -481,11 +457,13 @@
                 this.irParaTela(1);
             }
 
+            // FUNÇÃO ATUALIZADA COM LÓGICA DE LIMITE
             renderOpcoes(divId, lista, tipo, comPreco=false, maxLimit=Infinity) {
                 const div = document.getElementById(divId);
                 div.innerHTML = '';
                 if(!lista.length) { div.innerHTML = '<p style="color:#999; padding:10px;">Indisponível no momento.</p>'; return; }
 
+                // Atributo data-limit no container pai para controle
                 div.setAttribute('data-limit-val', maxLimit);
                 div.setAttribute('data-type-group', tipo);
 
@@ -517,11 +495,13 @@
             calcTotalMontagem() {
                 if(this.telaAtual !== 1) return;
                 
+                // 1. Calcular total financeiro
                 let adds = 0;
                 document.querySelectorAll('input[data-tipo="add"]:checked').forEach(el => adds += parseFloat(el.dataset.preco));
                 const total = this.produtoEmMontagem.precoBase + adds;
                 document.getElementById('total-display').innerText = `R$ ${total.toFixed(2)}`;
 
+                // 2. Verificar Limites (Sabores e Recheios)
                 this.verificarLimiteGrupo('lista-sabores');
                 this.verificarLimiteGrupo('lista-recheios');
             }
@@ -623,6 +603,7 @@
                 const rua = document.getElementById('cli-rua').value.trim();
                 const pagamento = document.getElementById('cli-pagamento').value;
 
+                // VALIDAÇÕES RIGOROSAS
                 let erros = [];
                 if(nome.length < 2) erros.push("Preencha seu nome");
                 if(zap.length < 8) erros.push("WhatsApp inválido (apenas números)");
@@ -631,10 +612,12 @@
 
                 if(erros.length > 0) {
                     alert("Atenção:\n- " + erros.join("\n- "));
+                    // Destacar campos com erro (exemplo simples para pagamento)
                     if(!pagamento) document.getElementById('cli-pagamento').classList.add('input-error');
                     return;
                 }
 
+                // Remove erro visual se tiver
                 document.getElementById('cli-pagamento').classList.remove('input-error');
 
                 document.getElementById('loading-text').innerText = "Enviando...";
@@ -688,7 +671,8 @@
         window.verificarTroco = (val) => {
             const trocoInput = document.getElementById('cli-troco');
             const select = document.getElementById('cli-pagamento');
-            select.classList.remove('input-error'); 
+            select.classList.remove('input-error'); // Limpa erro ao selecionar
+            
             trocoInput.classList.toggle('hidden', val !== 'Dinheiro');
         };
 
