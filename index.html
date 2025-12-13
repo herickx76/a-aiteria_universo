@@ -205,78 +205,61 @@
         .admin-footer { text-align: center; padding: 30px; color: #ccc; font-size: 12px; margin-top: 50px; }
         .admin-lock { opacity: 0.1; cursor: pointer; }
 
-        /* ================= RESPONSIVIDADE PARA PC ================= */
+/* ================= CORREÇÃO SEGURA PARA PC ================= */
 @media (min-width: 768px) {
-    /* 1. Fundo do site e centralização */
+    
+    /* 1. Centraliza o site e limita a largura para não ficar gigante */
     body {
-        background-color: #2e0052; /* Fundo roxo escuro bonito fora do app */
-        display: flex;
-        justify-content: center;
-        overflow: hidden; /* Remove rolagem dupla */
+        max-width: 800px; /* Largura ideal para PC */
+        margin: 0 auto; /* Centraliza o bloco principal */
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+        background-color: #fff; /* Garante fundo branco no centro */
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
 
-    /* 2. Cria a "caixa" do aplicativo (simula um celular) */
-    #app-container {
-        max-width: 450px; /* Largura máxima ideal */
-        width: 100%;
-        height: calc(100vh - 100px); /* Altura ajustada para o header */
-        margin-top: 100px; /* Espaço para o header */
-        background: var(--bg);
-        box-shadow: 0 0 40px rgba(0,0,0,0.5); /* Sombra para destacar */
-        position: relative;
-    }
-
-    /* 3. Ajusta o Header para ficar fixo e centralizado */
+    /* 2. Arruma o Cabeçalho para acompanhar a largura centralizada */
     header {
-        position: fixed;
+        max-width: 800px; /* Mesma largura do body */
         width: 100%;
-        max-width: 450px;
+        left: 50%; /* Joga pro meio da tela */
+        transform: translateX(-50%); /* Corrige a centralização exata */
+        position: fixed; /* Mantém fixo */
         top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 0 0 25px 25px;
-        z-index: 999;
     }
 
-    /* 4. Ajusta o Rodapé/Botões de ação para ficarem fixos e centralizados */
+    /* 3. Arruma o Rodapé/Botões para acompanhar a largura */
     .footer-action {
+        max-width: 800px;
         width: 100%;
-        max-width: 450px;
         left: 50%;
         transform: translateX(-50%);
-        border-radius: 25px 25px 0 0;
+        bottom: 0;
     }
 
-    /* 5. Ajusta as imagens para ficarem proporcionais */
+    /* 4. CORREÇÃO DAS IMAGENS (O principal problema) */
     .card-produto img {
-        height: 150px; /* Aumenta um pouco a altura */
-        object-fit: cover; /* Garante que não estique/distorça */
+        height: 160px; /* Altura fixa maiorzinha pro PC */
+        width: 100%;
+        object-fit: cover; /* MÁGICA: Corta a imagem pra caber sem esticar */
     }
 
-    /* 6. Ajusta o botão flutuante do carrinho */
-    #floating-cart {
-        left: 50% !important;
-        margin-left: 100px; /* Posiciona relativo ao centro */
-        right: auto !important;
-    }
-
-    /* 7. Barra de rolagem mais bonita no PC */
-    .step-screen::-webkit-scrollbar { width: 6px; }
-    .step-screen::-webkit-scrollbar-track { background: #f1f1f1; }
-    .step-screen::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-    
-    /* 8. Centraliza notificações */
-    #toast-box {
-        left: 50%;
-        transform: translateX(-50%);
-        margin-left: 0;
+    /* 5. Aumenta colunas no PC (3 por linha em vez de 2) */
+    .grid-produtos {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
     
-    #loading-screen {
-        max-width: 450px;
-        left: 50%;
-        transform: translateX(-50%);
+    /* 6. Ajuste fino no container principal */
+    #app-container {
+        padding-top: 20px;
+        /* Compensa o espaço do header fixo */
+        margin-top: 90px; 
     }
+    
+    /* Oculta scroll lateral feio se aparecer */
+    body::-webkit-scrollbar { width: 10px; background: #f1f1f1; }
+    body::-webkit-scrollbar-thumb { background: var(--primary); }
 }
 
     </style>
