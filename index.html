@@ -38,77 +38,67 @@
         #loading-text { color: white; font-weight: 500; letter-spacing: 1px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* HEADER NOVO (PERFIL EMPRESA - ALTERADO PARA ROXO) */
+        /* TOAST NOTIFICATION (NOVO) */
+        #toast-box {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast-box.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        /* HEADER */
         header {
-            background: var(--primary); /* ALTERADO: Fundo Roxo */
+            background: var(--primary);
             padding: 15px 20px; 
             position: sticky; top: 0; z-index: 100;
             box-shadow: 0 4px 15px rgba(75, 0, 130, 0.2);
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
-            color: var(--white); /* Texto Branco */
+            color: var(--white);
         }
-        .profile-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .profile-container { display: flex; align-items: center; gap: 15px; }
         .profile-logo {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255,255,255,0.3); /* Borda mais suave */
-            padding: 0; 
-            background: white;
+            width: 65px; height: 65px; border-radius: 50%; object-fit: cover;
+            border: 3px solid rgba(255,255,255,0.3); padding: 0; background: white;
         }
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-        }
+        .profile-info { display: flex; flex-direction: column; }
         .profile-handle {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: var(--white); /* Texto Branco */
-            display: flex;
-            align-items: center;
-            gap: 8px; /* Espaço entre icone e texto */
+            font-weight: 700; font-size: 1.1rem; color: var(--white);
+            display: flex; align-items: center; gap: 8px;
         }
-        /* Ajuste do ícone do insta para ficar branco ou manter cor original com fundo claro */
         .insta-icon {
-            background: white;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: white; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             font-size: 1.1rem;
-            /* Se preferir o icone colorido original, remova as 3 linhas acima e use color: white */
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            margin-top: 2px;
-            color: rgba(255,255,255,0.8); /* Cinza claro */
-            font-weight: 500;
+            display: flex; align-items: center; gap: 6px; font-size: 0.85rem;
+            margin-top: 2px; color: rgba(255,255,255,0.8); font-weight: 500;
         }
         .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #00ff7f; /* Verde mais brilhante */
-            box-shadow: 0 0 5px #00ff7f;
-            border: 1px solid white;
-        }
-        .status-dot.fechado {
-            background-color: #ff4444;
-            box-shadow: 0 0 5px #ff4444;
+            width: 10px; height: 10px; border-radius: 50%;
+            background-color: #00ff7f; box-shadow: 0 0 5px #00ff7f; border: 1px solid white;
         }
 
-        /* CONTAINER PRINCIPAL (SLIDER) */
+        /* CONTAINER PRINCIPAL */
         #app-container {
             width: 100%; height: 100%; padding-top: 20px;
             overflow: hidden; position: relative;
@@ -122,7 +112,7 @@
             padding: 20px; padding-bottom: 120px;
         }
 
-        /* TELA 1: CARDÁPIO (GRID) */
+        /* CARDÁPIO */
         .section-title { 
             font-size: 1.2rem; font-weight: 700; margin: 25px 0 15px; 
             color: var(--text); display: flex; align-items: center; gap: 8px;
@@ -134,27 +124,19 @@
         .grid-produtos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         
         .card-produto {
-            background: white; border-radius: 20px; /* Mais arredondado */
-            padding: 12px; text-align: center;
+            background: white; border-radius: 20px; padding: 12px; text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s;
             border: 1px solid transparent; position: relative; overflow: hidden;
         }
         .card-produto:active { transform: scale(0.97); }
-        
-        /* --- ESTILO NOVO DAS IMAGENS DO CARDÁPIO --- */
         .card-produto img { 
-            width: 100%; 
-            height: 110px; /* Altura fixa */
-            object-fit: cover; /* Cobre o espaço sem deformar */
-            border-radius: 15px; /* Bordas arredondadas na imagem */
-            margin-bottom: 10px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra suave na foto */
+            width: 100%; height: 110px; object-fit: cover; border-radius: 15px;
+            margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        
         .card-produto h3 { font-size: 0.95rem; margin-bottom: 5px; color: var(--text); font-weight: 600; line-height: 1.2; }
         .card-produto .price { color: var(--primary); font-weight: 800; font-size: 1.1rem; }
 
-        /* TELA 2: MONTAGEM */
+        /* MONTAGEM */
         .montagem-header { text-align: center; margin-bottom: 25px; }
         .montagem-header h2 { font-size: 1.5rem; color: var(--primary); }
         
@@ -167,21 +149,13 @@
         
         .opcao-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 0; border-bottom: 1px solid #f9f9f9;
-            transition: 0.2s;
+            padding: 12px 0; border-bottom: 1px solid #f9f9f9; transition: 0.2s;
         }
         .opcao-item:last-child { border-bottom: none; }
-        
         .opcao-info { display: flex; align-items: center; gap: 12px; }
-        
         .opcao-img { 
-            width: 50px; 
-            height: 50px; 
-            border-radius: 12px; 
-            object-fit: cover; 
-            background: #f0f0f0; 
-            border: 1px solid #eee;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            width: 50px; height: 50px; border-radius: 12px; object-fit: cover; 
+            background: #f0f0f0; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         /* Checkbox customizado */
@@ -195,7 +169,7 @@
         .chk-visual::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 12px; display: none; }
         .chk-input:checked + .chk-visual::after { display: block; }
 
-        /* TELA 3: CARRINHO */
+        /* CARRINHO */
         .cart-item { background: white; padding: 20px; border-radius: 16px; margin-bottom: 15px; position: relative; border-left: 5px solid var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .cart-item-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 5px; }
         .cart-item-desc { font-size: 0.9rem; color: #666; line-height: 1.4; }
@@ -205,33 +179,29 @@
         }
         .form-checkout input:focus { border-color: var(--primary); background: white; }
 
-        /* RODAPÉ DE AÇÃO (ALTERADO PARA ROXO) */
+        /* RODAPÉ DE AÇÃO */
         .footer-action {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: var(--primary); /* ALTERADO: Fundo Roxo */
+            background: var(--primary);
             padding: 15px 20px;
             box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
             display: flex; justify-content: space-between; align-items: center; z-index: 200;
             border-top-left-radius: 20px; border-top-right-radius: 20px;
-            color: white; /* Texto Branco */
+            color: white;
         }
         .footer-total { font-size: 0.9rem; color: rgba(255,255,255,0.7); display: flex; flex-direction: column; }
         .total-value { color: var(--accent); font-weight: 800; font-size: 1.4rem; line-height: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         
         .btn-action {
-            background: white; /* Botão Branco */
-            color: var(--primary); /* Texto Roxo */
-            border: none;
+            background: white; color: var(--primary); border: none;
             padding: 12px 30px; border-radius: 50px; font-weight: 700;
             font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 10px;
             transition: 0.2s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         .btn-action:active { transform: scale(0.95); }
         .btn-action:disabled { background: #ccc; color: #666; box-shadow: none; cursor: not-allowed; }
-        
         .btn-back { 
-            background: rgba(255,255,255,0.2); /* Fundo translúcido */
-            color: white; 
+            background: rgba(255,255,255,0.2); color: white; 
             border: none; width: 45px; height: 45px; border-radius: 50%; margin-right: 15px; cursor: pointer; font-size: 1.1rem; 
         }
 
@@ -244,6 +214,8 @@
 </head>
 <body>
 
+    <div id="toast-box"><i class="fas fa-check-circle"></i> Item adicionado ao carrinho!</div>
+
     <div id="loading-screen">
         <div class="spinner"></div>
         <div id="loading-text">Carregando Loja...</div>
@@ -252,7 +224,6 @@
     <header>
         <div class="profile-container">
             <img src="imagens_acai/logo-universo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/1625/1625048.png'" alt="Logo" class="profile-logo">
-            
             <div class="profile-info">
                 <div class="profile-handle">
                     <i class="fab fa-instagram insta-icon"></i> @universodoacai
@@ -276,6 +247,10 @@
 
                 <div class="section-title">Bebidas & Outros</div>
                 <div class="grid-produtos" id="grid-bebidas"></div>
+                
+                <button id="floating-cart" class="btn-action hidden" style="position: fixed; bottom: 20px; right: 20px; z-index: 90;" onclick="app.irParaTela(2)">
+                    <i class="fas fa-shopping-cart"></i> Ver Carrinho
+                </button>
             </div>
 
             <div class="step-screen" id="step-2">
@@ -352,7 +327,7 @@
 
     <div class="admin-footer">
         <p>&copy; 2025 Universo do Açaí</p>
-        <span class="admin-lock" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> v2.1</span>
+        <span class="admin-lock" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> v2.2</span>
     </div>
 
     <script type="module">
@@ -377,7 +352,7 @@
         const db = getDatabase(appFirebase);
         const dbRef = ref(db);
 
-        // Produtos Fixos (Para carregar rápido)
+        // Produtos Fixos
         const PRODUTOS = {
             isopor: [
                 { id: 'p1', nome: '300mL', preco: 12.00, img: 'imagens_acai/pote1.jpeg' },
@@ -408,6 +383,7 @@
             async init() {
                 this.renderizarTelaInicial();
                 await this.buscarIngredientes();
+                this.atualizarBotaoFlutuante();
                 
                 document.getElementById('loading-screen').style.opacity = '0';
                 setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 500);
@@ -428,24 +404,16 @@
 
             async buscarIngredientes() {
                 const pathBase = `empresas/${this.empresaId}/cardapio`;
-                
-                const fetchCat = async (cat) => {
-                    try {
-                        const snap = await get(child(dbRef, `${pathBase}/${cat}`));
-                        if(!snap.exists()) {
-                            const snapOld = await get(child(dbRef, `${cat}_acai`));
-                            return snapOld.exists() ? Object.values(snapOld.val()) : [];
-                        }
-                        const dados = snap.val();
-                        return Object.values(dados).filter(i => i && i.disponivel !== false);
-                    } catch(e) {
-                        console.error(e);
-                        return [];
-                    }
-                };
+                try {
+                    const [s, r, a] = await Promise.all([
+                        get(child(dbRef, `${pathBase}/sabores`)),
+                        get(child(dbRef, `${pathBase}/recheios`)),
+                        get(child(dbRef, `${pathBase}/adicionais`))
+                    ]);
 
-                const [s, r, a] = await Promise.all([fetchCat('sabores'), fetchCat('recheios'), fetchCat('adicionais')]);
-                this.estoque = { sabores: s, recheios: r, adicionais: a };
+                    const fmt = (snap) => snap.exists() ? Object.values(snap.val()).filter(i=>i.disponivel !== false) : [];
+                    this.estoque = { sabores: fmt(s), recheios: fmt(r), adicionais: fmt(a) };
+                } catch(e) { console.error(e); }
             }
 
             irParaTela(index) {
@@ -453,8 +421,12 @@
                 document.getElementById('slider').style.transform = `translateX(-${index * 25}%)`;
                 
                 const footer = document.getElementById('footer-bar');
+                // Footer só aparece na tela 1 (montagem) e 2 (carrinho)
                 if(index === 0 || index === 3) footer.classList.add('hidden');
                 else footer.classList.remove('hidden');
+
+                // Botão flutuante só aparece na tela 0 se tiver itens
+                this.atualizarBotaoFlutuante();
 
                 const btnAvancar = document.getElementById('btn-avancar');
                 if(index === 1) {
@@ -472,12 +444,14 @@
             avancarTela() { if(this.telaAtual < 3) this.irParaTela(this.telaAtual + 1); }
             voltarTela() { if(this.telaAtual > 0) this.irParaTela(this.telaAtual - 1); }
 
+            // CORREÇÃO AQUI NA ÁGUA/VITAMINA
             abrirMontagem(id, nome, preco) {
                 if(nome.includes("Água") || nome.includes("Vitamina")) {
                     this.carrinho.push({ produto: nome, total: preco, sabores:[], recheios:[], adicionais:[] });
                     this.salvarCarrinho();
-                    this.irParaTela(2);
-                    return;
+                    this.mostrarToast(`${nome} adicionado!`);
+                    this.atualizarBotaoFlutuante();
+                    return; 
                 }
 
                 this.produtoEmMontagem = { id, nome, precoBase: preco };
@@ -549,6 +523,7 @@
                     total: total
                 });
                 this.salvarCarrinho();
+                this.mostrarToast("Item adicionado ao carrinho!");
                 this.irParaTela(2);
             }
 
@@ -589,6 +564,7 @@
                     this.carrinho.splice(i, 1);
                     this.salvarCarrinho();
                     this.renderCarrinho();
+                    this.atualizarBotaoFlutuante();
                 }
             }
 
@@ -628,6 +604,22 @@
             }
 
             salvarCarrinho() { localStorage.setItem('carrinho_v2', JSON.stringify(this.carrinho)); }
+            
+            mostrarToast(msg) {
+                const x = document.getElementById("toast-box");
+                x.innerText = msg;
+                x.className = "show";
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+            }
+            
+            atualizarBotaoFlutuante() {
+                const btn = document.getElementById('floating-cart');
+                if(this.telaAtual === 0 && this.carrinho.length > 0) {
+                    btn.classList.remove('hidden');
+                } else {
+                    btn.classList.add('hidden');
+                }
+            }
         }
 
         window.verificarTroco = (val) => {
